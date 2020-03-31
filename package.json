@@ -1,0 +1,17 @@
+{
+  "name": "board2d",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "./node_modules/typescript/bin/tsc",
+    "docs": "./node_modules/typedoc/bin/typedoc"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typedoc": "^0.17.3",
+    "typescript": "^3.8.3"
+  }
+}
