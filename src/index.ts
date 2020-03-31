@@ -87,6 +87,17 @@ export module board2d {
       return result;
     }
 
+    some(check: (pos: Pos, value: T | null)=>boolean): boolean {
+      for(var y = 0; y < this.#ySize; y++) {
+        for(var x = 0; x < this.#xSize; x++) {
+          if(check(new Pos(x, y), this.#values[y][x])) {
+            return true;// 1つでも見つかったら即返す
+          }
+        }
+      }
+      return false;
+    }
+
     static create<T>(board: Board<T>): Board<T> {
       var result = new Board<T>(board.#xSize, board.#ySize);
       board.forEach((pos, v) => result.put(pos, v));

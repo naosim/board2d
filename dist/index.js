@@ -98,6 +98,16 @@ var board2d;
             this.forEach((pos, v) => result.put(pos, v));
             return result;
         }
+        some(check) {
+            for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
+                for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
+                    if (check(new Pos(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
+                        return true; // 1つでも見つかったら即返す
+                    }
+                }
+            }
+            return false;
+        }
         static create(board) {
             var result = new Board(__classPrivateFieldGet(board, _xSize), __classPrivateFieldGet(board, _ySize));
             board.forEach((pos, v) => result.put(pos, v));

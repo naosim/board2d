@@ -44,6 +44,7 @@ export declare module board2d {
         getValueFromXY(x: number, y: number): T | null | undefined;
         exists(pos: Pos): boolean;
         copy(): Board<T>;
+        some(check: (pos: Pos, value: T | null) => boolean): boolean;
         static create<T>(board: Board<T>): Board<T>;
     }
 }
