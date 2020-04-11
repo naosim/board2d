@@ -45,6 +45,11 @@ export declare module board2d {
         exists(pos: Pos): boolean;
         copy(): Board<T>;
         some(check: (pos: Pos, value: T | null) => boolean): boolean;
+        find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
         static create<T>(board: Board<T>): Board<T>;
     }
+    type ValueAndPos<T> = {
+        pos: Pos;
+        value: T;
+    };
 }

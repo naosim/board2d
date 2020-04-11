@@ -97,11 +97,31 @@ export module board2d {
       }
       return false;
     }
+    
+    find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
+      for(var y = 0; y < this.#ySize; y++) {
+        for(var x = 0; x < this.#xSize; x++) {
+          if(check(new Pos(x, y), this.#values[y][x])) {
+            return {
+              pos: new Pos(x, y),
+              value: this.#values[y][x]
+            };// 1つでも見つかったら即返す
+          }
+        }
+      }
+      return null;
+    }
+
 
     static create<T>(board: Board<T>): Board<T> {
       var result = new Board<T>(board.#xSize, board.#ySize);
       board.forEach((pos, v) => result.put(pos, v));
       return result;
     }
+  }
+
+  export type ValueAndPos<T> = {
+    pos: Pos,
+    value:T
   }
 }

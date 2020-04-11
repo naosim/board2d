@@ -108,6 +108,19 @@ var board2d;
             }
             return false;
         }
+        find(check) {
+            for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
+                for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
+                    if (check(new Pos(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
+                        return {
+                            pos: new Pos(x, y),
+                            value: __classPrivateFieldGet(this, _values)[y][x]
+                        }; // 1つでも見つかったら即返す
+                    }
+                }
+            }
+            return null;
+        }
         static create(board) {
             var result = new Board(__classPrivateFieldGet(board, _xSize), __classPrivateFieldGet(board, _ySize));
             board.forEach((pos, v) => result.put(pos, v));
