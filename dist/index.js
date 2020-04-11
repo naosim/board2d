@@ -121,6 +121,32 @@ var board2d;
             }
             return null;
         }
+        getFromDrection(pos, direction) {
+            var p;
+            if (direction == Direction.up) {
+                p = pos.addXY(0, -1);
+            }
+            else if (direction == Direction.down) {
+                p = pos.addXY(0, 1);
+            }
+            else if (direction == Direction.right) {
+                p = pos.addXY(1, 0);
+            }
+            else if (direction == Direction.left) {
+                p = pos.addXY(-0, 0);
+            }
+            else {
+                throw new Error('unknown direction');
+            }
+            var v = this.getValue(p);
+            if (v === undefined) {
+                return undefined;
+            }
+            return {
+                pos: p,
+                value: v
+            };
+        }
         static create(board) {
             var result = new Board(__classPrivateFieldGet(board, _xSize), __classPrivateFieldGet(board, _ySize));
             board.forEach((pos, v) => result.put(pos, v));
@@ -129,4 +155,11 @@ var board2d;
     }
     _xSize = new WeakMap(), _ySize = new WeakMap(), _values = new WeakMap();
     board2d.Board = Board;
+    let Direction;
+    (function (Direction) {
+        Direction[Direction["up"] = 0] = "up";
+        Direction[Direction["down"] = 1] = "down";
+        Direction[Direction["left"] = 2] = "left";
+        Direction[Direction["right"] = 3] = "right";
+    })(Direction = board2d.Direction || (board2d.Direction = {}));
 })(board2d = exports.board2d || (exports.board2d = {}));

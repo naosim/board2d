@@ -46,10 +46,17 @@ export declare module board2d {
         copy(): Board<T>;
         some(check: (pos: Pos, value: T | null) => boolean): boolean;
         find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
+        getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined;
         static create<T>(board: Board<T>): Board<T>;
     }
     type ValueAndPos<T> = {
         pos: Pos;
         value: T;
     };
+    enum Direction {
+        up = 0,
+        down = 1,
+        left = 2,
+        right = 3
+    }
 }
