@@ -30,6 +30,23 @@ var board2d;
         addXY(x, y) {
             return new Pos(this.x + x, this.y + y);
         }
+        addDirection(direction) {
+            if (direction == Direction.up) {
+                return this.addXY(0, -1);
+            }
+            else if (direction == Direction.down) {
+                return this.addXY(0, 1);
+            }
+            else if (direction == Direction.right) {
+                return this.addXY(1, 0);
+            }
+            else if (direction == Direction.left) {
+                return this.addXY(-1, 0);
+            }
+            else {
+                throw new Error('unknown direction');
+            }
+        }
     }
     board2d.Pos = Pos;
     /**
@@ -122,22 +139,7 @@ var board2d;
             return null;
         }
         getFromDrection(pos, direction) {
-            var p;
-            if (direction == Direction.up) {
-                p = pos.addXY(0, -1);
-            }
-            else if (direction == Direction.down) {
-                p = pos.addXY(0, 1);
-            }
-            else if (direction == Direction.right) {
-                p = pos.addXY(1, 0);
-            }
-            else if (direction == Direction.left) {
-                p = pos.addXY(-0, 0);
-            }
-            else {
-                throw new Error('unknown direction');
-            }
+            var p = pos.addDirection(direction);
             var v = this.getValue(p);
             if (v === undefined) {
                 return undefined;

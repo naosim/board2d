@@ -12,6 +12,19 @@ export module board2d {
     addXY(x: number, y: number) {
       return new Pos(this.x + x, this.y + y);
     }
+    addDirection(direction: Direction): Pos {
+      if(direction == Direction.up) {
+        return this.addXY(0, -1);
+      } else if(direction == Direction.down) {
+        return this.addXY(0, 1);
+      } else if(direction == Direction.right) {
+        return this.addXY(1, 0);
+      } else if(direction == Direction.left) {
+        return this.addXY(-1, 0);
+      } else {
+        throw new Error('unknown direction')
+      }
+    }
   }
 
   /**
@@ -114,18 +127,7 @@ export module board2d {
     }
 
     getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined {
-      var p: Pos;
-      if(direction == Direction.up) {
-        p = pos.addXY(0, -1);
-      } else if(direction == Direction.down) {
-        p = pos.addXY(0, 1);
-      } else if(direction == Direction.right) {
-        p = pos.addXY(1, 0);
-      } else if(direction == Direction.left) {
-        p = pos.addXY(-0, 0);
-      } else {
-        throw new Error('unknown direction')
-      }
+      var p: Pos = pos.addDirection(direction);
       var v = this.getValue(p);
       if(v === undefined) {
         return undefined;

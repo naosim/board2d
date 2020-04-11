@@ -8,6 +8,7 @@ export declare module board2d {
         constructor(x: number, y: number);
         add(pos: Pos): Pos;
         addXY(x: number, y: number): Pos;
+        addDirection(direction: Direction): Pos;
     }
     /**
      * 盤
