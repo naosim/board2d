@@ -24,6 +24,7 @@ export declare module board2d {
         get ySize(): number;
         get values(): (T | null)[][];
         put(pos: Pos, value: T | null): Board<T>;
+        putImmutable(pos: Pos, value: T | null): Board<T>;
         /**
          * call関数を、配列の各要素に対して一度ずつ実行する
          * @param callback

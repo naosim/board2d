@@ -52,6 +52,12 @@ export module board2d {
       this.#values[pos.y][pos.x] = value;
       return this;
     }
+
+    putImmutable(pos: Pos, value: T | null): Board<T> {
+      var result = Board.create(this);
+      result.#values[pos.y][pos.x] = value;
+      return result;
+    }
   
     /**
      * call関数を、配列の各要素に対して一度ずつ実行する

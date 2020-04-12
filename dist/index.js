@@ -72,6 +72,11 @@ var board2d;
             __classPrivateFieldGet(this, _values)[pos.y][pos.x] = value;
             return this;
         }
+        putImmutable(pos, value) {
+            var result = Board.create(this);
+            __classPrivateFieldGet(result, _values)[pos.y][pos.x] = value;
+            return result;
+        }
         /**
          * call関数を、配列の各要素に対して一度ずつ実行する
          * @param callback
