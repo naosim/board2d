@@ -17,7 +17,7 @@ var board2d;
 (function (board2d) {
     var _xSize, _ySize, _values;
     /**
-     * 盤の位置
+     * 位置
      */
     class Pos {
         constructor(x, y) {
@@ -30,6 +30,16 @@ var board2d;
         addXY(x, y) {
             return new Pos(this.x + x, this.y + y);
         }
+        /**
+         * 方向を加えた位置を取得する
+         *
+         * 現在(x, y) = (0, 0)にいる場合
+         * up なら    ( 0, -1)
+         * down なら  ( 0,  1)
+         * right なら ( 1,  0)
+         * left なら  (-1,  0)
+         * @param direction
+         */
         addDirection(direction) {
             if (direction == Direction.up) {
                 return this.addXY(0, -1);
@@ -68,10 +78,20 @@ var board2d;
         get xSize() { return __classPrivateFieldGet(this, _xSize); }
         get ySize() { return __classPrivateFieldGet(this, _ySize); }
         get values() { return __classPrivateFieldGet(this, _values); }
+        /**
+         * 盤を更新する
+         * @param pos
+         * @param value
+         */
         put(pos, value) {
             __classPrivateFieldGet(this, _values)[pos.y][pos.x] = value;
             return this;
         }
+        /**
+         * 盤を更新する (イミュータブル)
+         * @param pos
+         * @param value
+         */
         putImmutable(pos, value) {
             var result = Board.create(this);
             __classPrivateFieldGet(result, _values)[pos.y][pos.x] = value;
@@ -92,7 +112,7 @@ var board2d;
          * 指定した位置にある要素を取得
          *
          * @param pos
-         * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
+         * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
          */
         getValue(pos) {
             return this.getValueFromXY(pos.x, pos.y);
@@ -143,6 +163,11 @@ var board2d;
             }
             return null;
         }
+        /**
+         * posからdirectionの方向に1歩進んだ場所を取得する
+         * @param pos
+         * @param direction
+         */
         getFromDrection(pos, direction) {
             var p = pos.addDirection(direction);
             var v = this.getValue(p);
@@ -154,6 +179,10 @@ var board2d;
                 value: v
             };
         }
+        /**
+         * イミュータブルに盤を作成する
+         * @param board
+         */
         static create(board) {
             var result = new Board(__classPrivateFieldGet(board, _xSize), __classPrivateFieldGet(board, _ySize));
             board.forEach((pos, v) => result.put(pos, v));
@@ -162,6 +191,9 @@ var board2d;
     }
     _xSize = new WeakMap(), _ySize = new WeakMap(), _values = new WeakMap();
     board2d.Board = Board;
+    /**
+     * 方向
+     */
     let Direction;
     (function (Direction) {
         Direction[Direction["up"] = 0] = "up";

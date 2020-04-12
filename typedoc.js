@@ -1,6 +1,6 @@
 module.exports = {
   out: './docs',
-  name: 'reversi',
+  name: 'board2d',
   // readme: 'none',
   target: 'ES6',
   includes: './',

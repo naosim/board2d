@@ -1,6 +1,6 @@
 export module board2d {
   /**
-   * 盤の位置
+   * 位置
    */
   export class Pos {
     constructor(public x: number, public y: number) {
@@ -12,6 +12,17 @@ export module board2d {
     addXY(x: number, y: number) {
       return new Pos(this.x + x, this.y + y);
     }
+
+    /**
+     * 方向を加えた位置を取得する
+     * 
+     * 現在(x, y) = (0, 0)にいる場合
+     * up なら    ( 0, -1)
+     * down なら  ( 0,  1)
+     * right なら ( 1,  0)
+     * left なら  (-1,  0)
+     * @param direction 
+     */
     addDirection(direction: Direction): Pos {
       if(direction == Direction.up) {
         return this.addXY(0, -1);
@@ -48,11 +59,21 @@ export module board2d {
     get ySize(): number { return this.#ySize; }
     get values(): (T | null)[][] { return this.#values; }
 
+    /**
+     * 盤を更新する
+     * @param pos 
+     * @param value 
+     */
     put(pos: Pos, value: T | null): Board<T> {
       this.#values[pos.y][pos.x] = value;
       return this;
     }
 
+    /**
+     * 盤を更新する (イミュータブル)
+     * @param pos 
+     * @param value 
+     */
     putImmutable(pos: Pos, value: T | null): Board<T> {
       var result = Board.create(this);
       result.#values[pos.y][pos.x] = value;
@@ -75,7 +96,7 @@ export module board2d {
      * 指定した位置にある要素を取得
      * 
      * @param pos 
-     * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
+     * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
      */
     getValue(pos: Pos): T | null | undefined {
       return this.getValueFromXY(pos.x, pos.y);
@@ -132,6 +153,11 @@ export module board2d {
       return null;
     }
 
+    /**
+     * posからdirectionの方向に1歩進んだ場所を取得する
+     * @param pos 
+     * @param direction 
+     */
     getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined {
       var p: Pos = pos.addDirection(direction);
       var v = this.getValue(p);
@@ -144,7 +170,10 @@ export module board2d {
       };
     }
 
-
+    /**
+     * イミュータブルに盤を作成する
+     * @param board 
+     */
     static create<T>(board: Board<T>): Board<T> {
       var result = new Board<T>(board.#xSize, board.#ySize);
       board.forEach((pos, v) => result.put(pos, v));
@@ -157,6 +186,9 @@ export module board2d {
     value:T
   }
 
+  /**
+   * 方向
+   */
   export enum Direction {
     up, down, left, right
   }
