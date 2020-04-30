@@ -15,7 +15,7 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 Object.defineProperty(exports, "__esModule", { value: true });
 var board2d;
 (function (board2d) {
-    var _xSize, _ySize, _values;
+    var _xSize, _ySize, _values, _poses;
     /**
      * 位置(不変)
      */
@@ -132,9 +132,11 @@ var board2d;
             _xSize.set(this, void 0);
             _ySize.set(this, void 0);
             _values.set(this, void 0); // T or null
+            _poses.set(this, void 0);
             __classPrivateFieldSet(this, _xSize, xSize);
             __classPrivateFieldSet(this, _ySize, ySize);
-            __classPrivateFieldSet(this, _values, new Array(ySize).fill(null).map(v => new Array(xSize).fill(null))); // 3x3
+            __classPrivateFieldSet(this, _values, new Array(ySize).fill(null).map(v => new Array(xSize).fill(null)));
+            __classPrivateFieldSet(this, _poses, new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x, y))));
         }
         /**
          * 盤のxサイズ
@@ -160,7 +162,7 @@ var board2d;
          * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
          * ```javascript
          * var board = new board2d.Board<string>(3, 3);
-         * var newBoard = board.putImmutable(new board2d.Pos(2, 2), 'x'); // 駒を置く
+         * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
          * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
          * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
          * ```
@@ -181,7 +183,7 @@ var board2d;
         forEach(callback) {
             for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
                 for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    callback(new PosImmutable(x, y), __classPrivateFieldGet(this, _values)[y][x]);
+                    callback(__classPrivateFieldGet(this, _poses)[y][x], __classPrivateFieldGet(this, _values)[y][x]);
                 }
             }
         }
@@ -190,7 +192,7 @@ var board2d;
          *
          * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
          * ```javascript
-         * var board = new board2d.Board<string>(2, 2).putImmutable(new board2d.Pos(1, 1), 'x');
+         * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
          * var a = board.getValue(new board2d.Pos(1, 1)); // x
          * var b = board.getValue(new board2d.Pos(0, 0)); // null
          * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
@@ -231,13 +233,13 @@ var board2d;
         }
         copy() {
             var result = new Board(__classPrivateFieldGet(this, _xSize), __classPrivateFieldGet(this, _ySize));
-            this.forEach((pos, v) => result.put(pos, v));
+            this.forEach((pos, v) => result.putMutable(pos, v));
             return result;
         }
         some(check) {
             for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
                 for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    if (check(new PosImmutable(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
+                    if (check(__classPrivateFieldGet(this, _poses)[y][x], __classPrivateFieldGet(this, _values)[y][x])) {
                         return true; // 1つでも見つかったら即返す
                     }
                 }
@@ -247,9 +249,9 @@ var board2d;
         find(check) {
             for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
                 for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    if (check(new PosImmutable(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
+                    if (check(__classPrivateFieldGet(this, _poses)[y][x], __classPrivateFieldGet(this, _values)[y][x])) {
                         return {
-                            pos: new PosImmutable(x, y),
+                            pos: __classPrivateFieldGet(this, _poses)[y][x],
                             value: __classPrivateFieldGet(this, _values)[y][x]
                         }; // 1つでも見つかったら即返す
                     }
@@ -279,11 +281,11 @@ var board2d;
          */
         static create(board) {
             var result = new Board(__classPrivateFieldGet(board, _xSize), __classPrivateFieldGet(board, _ySize));
-            board.forEach((pos, v) => result.put(pos, v));
+            board.forEach((pos, v) => result.putMutable(pos, v));
             return result;
         }
     }
-    _xSize = new WeakMap(), _ySize = new WeakMap(), _values = new WeakMap();
+    _xSize = new WeakMap(), _ySize = new WeakMap(), _values = new WeakMap(), _poses = new WeakMap();
     board2d.Board = Board;
     /**
      * 方向

@@ -130,6 +130,7 @@ export module board2d {
     #xSize: number;
     #ySize: number;
     #values: (T | null)[][]; // T or null
+    #poses: PosImmutable[][];
 
     /**
      * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
@@ -144,7 +145,8 @@ export module board2d {
       this.#xSize = xSize;
       this.#ySize = ySize;
 
-      this.#values = new Array(ySize).fill(null).map(v => new Array(xSize).fill(null)); // 3x3
+      this.#values = new Array(ySize).fill(null).map(v => new Array(xSize).fill(null));
+      this.#poses = new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x as X, y as Y)));
     }
 
     /**
@@ -173,7 +175,7 @@ export module board2d {
      * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
      * ```javascript
      * var board = new board2d.Board<string>(3, 3);
-     * var newBoard = board.putImmutable(new board2d.Pos(2, 2), 'x'); // 駒を置く
+     * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
      * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
      * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
      * ```
@@ -195,7 +197,7 @@ export module board2d {
     forEach(callback: (pos: PosImmutable, value: T | null)=>void) {
       for(var y = 0 as Y; y < this.#ySize; y++) {
         for(var x = 0 as X; x < this.#xSize; x++) {
-          callback(new PosImmutable(x, y), this.#values[y][x])
+          callback(this.#poses[y][x], this.#values[y][x])
         }
       }
     }
@@ -205,7 +207,7 @@ export module board2d {
      *
      * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
      * ```javascript
-     * var board = new board2d.Board<string>(2, 2).putImmutable(new board2d.Pos(1, 1), 'x');
+     * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
      * var a = board.getValue(new board2d.Pos(1, 1)); // x
      * var b = board.getValue(new board2d.Pos(0, 0)); // null
      * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
@@ -249,14 +251,14 @@ export module board2d {
 
     copy(): Board<T> {
       var result = new Board<T>(this.#xSize, this.#ySize);
-      this.forEach((pos, v) => result.put(pos, v));
+      this.forEach((pos, v) => result.putMutable(pos, v));
       return result;
     }
 
     some(check: (pos: PosImmutable, value: T | null)=>boolean): boolean {
       for(var y: Y = 0 as Y; y < this.#ySize; y++) {
         for(var x: X = 0 as X; x < this.#xSize; x++) {
-          if(check(new PosImmutable(x, y), this.#values[y][x])) {
+          if(check(this.#poses[y][x], this.#values[y][x])) {
             return true;// 1つでも見つかったら即返す
           }
         }
@@ -267,9 +269,9 @@ export module board2d {
     find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
       for(var y = 0 as Y; y < this.#ySize; y++) {
         for(var x = 0 as X; x < this.#xSize; x++) {
-          if(check(new PosImmutable(x, y), this.#values[y][x])) {
+          if(check(this.#poses[y][x], this.#values[y][x])) {
             return {
-              pos: new PosImmutable(x, y),
+              pos: this.#poses[y][x],
               value: this.#values[y][x]
             };// 1つでも見つかったら即返す
           }
@@ -301,7 +303,7 @@ export module board2d {
      */
     static create<T>(board: Board<T>): Board<T> {
       var result = new Board<T>(board.#xSize, board.#ySize);
-      board.forEach((pos, v) => result.put(pos, v));
+      board.forEach((pos, v) => result.putMutable(pos, v));
       return result;
     }
   }

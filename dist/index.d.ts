@@ -113,7 +113,7 @@ export declare module board2d {
          * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
          * ```javascript
          * var board = new board2d.Board<string>(3, 3);
-         * var newBoard = board.putImmutable(new board2d.Pos(2, 2), 'x'); // 駒を置く
+         * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
          * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
          * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
          * ```
@@ -133,7 +133,7 @@ export declare module board2d {
          *
          * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
          * ```javascript
-         * var board = new board2d.Board<string>(2, 2).putImmutable(new board2d.Pos(1, 1), 'x');
+         * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
          * var a = board.getValue(new board2d.Pos(1, 1)); // x
          * var b = board.getValue(new board2d.Pos(0, 0)); // null
          * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
