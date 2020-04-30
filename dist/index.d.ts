@@ -1,21 +1,42 @@
 export declare module board2d {
+    /**
+     * @ignore
+     */
     const XNominality: unique symbol;
+    /**
+     * X座標
+     * number型の拡張
+     */
     export type X = number & {
         [XNominality]: never;
     };
+    /**
+     * @ignore
+     */
     const YNominality: unique symbol;
+    /**
+     * Y座標
+     * number型の拡張
+     */
     export type Y = number & {
         [YNominality]: never;
     };
     /**
      * 位置
      */
-    export class Pos {
-        x: X;
-        y: Y;
+    export interface Pos {
+        readonly x: X;
+        readonly y: Y;
+    }
+    /**
+     * 位置(不変)
+     */
+    export class PosImmutable implements Pos {
+        readonly x: X;
+        readonly y: Y;
         constructor(x: X, y: Y);
-        add(pos: Pos): Pos;
-        addXY(x: X, y: Y): Pos;
+        add(pos: Pos): PosImmutable;
+        addXY(x: X, y: Y): PosImmutable;
         /**
          * 方向を加えた位置を取得する
          *
@@ -26,8 +47,31 @@ export declare module board2d {
          * left なら  (-1,  0)
          * @param direction
          */
-        addDirection(direction: Direction): Pos;
-        static createFromDirection(direction: Direction): Pos;
+        addDirection(direction: Direction): PosImmutable;
+        static createFromPos(pos: Pos): PosImmutable;
+        static createFromDirection(direction: Direction): PosImmutable;
+    }
+    /**
+     * 位置
+     */
+    export class PosMutable {
+        x: X;
+        y: Y;
+        constructor(x: X, y: Y);
+        add(pos: Pos): PosMutable;
+        addXY(x: X, y: Y): PosMutable;
+        /**
+         * 方向を加えた位置を取得する
+         *
+         * 現在(x, y) = (0, 0)にいる場合
+         * up なら    ( 0, -1)
+         * down なら  ( 0,  1)
+         * right なら ( 1,  0)
+         * left なら  (-1,  0)
+         * @param direction
+         */
+        addDirection(direction: Direction): PosMutable;
+        static createFromPos(pos: Pos): PosMutable;
     }
     /**
      * 盤
@@ -59,15 +103,6 @@ export declare module board2d {
         get values(): (T | null)[][];
         /**
          * 盤を更新する
-         * @deprecated
-         *
-         * @param pos
-         * @param value
-         */
-        put(pos: Pos, value: T | null): Board<T>;
-        /**
-         * 盤を更新する
-         * @deprecated
          *
          * @param pos
          * @param value
@@ -87,12 +122,12 @@ export declare module board2d {
          * @param pos
          * @param value
          */
-        putImmutable(pos: Pos, value: T | null): Board<T>;
+        put(pos: Pos, value: T | null): Board<T>;
         /**
          * callback関数を、盤上の各セルに対して一度ずつ実行する
          * @param callback
          */
-        forEach(callback: (pos: Pos, value: T | null) => void): void;
+        forEach(callback: (pos: PosImmutable, value: T | null) => void): void;
         /**
          * 指定した位置にある駒を取得する
          *
@@ -126,7 +161,7 @@ export declare module board2d {
          */
         exists(pos: Pos): boolean;
         copy(): Board<T>;
-        some(check: (pos: Pos, value: T | null) => boolean): boolean;
+        some(check: (pos: PosImmutable, value: T | null) => boolean): boolean;
         find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
         /**
          * posからdirectionの方向に1歩進んだ場所を取得する
@@ -141,8 +176,8 @@ export declare module board2d {
         static create<T>(board: Board<T>): Board<T>;
     }
     export type ValueAndPos<T> = {
-        pos: Pos;
-        value: T;
+        readonly pos: PosImmutable;
+        readonly value: T;
     };
     /**
      * 方向

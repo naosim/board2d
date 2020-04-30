@@ -83,7 +83,14 @@
 							<h3>Classes</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-class tsd-parent-kind-namespace tsd-has-type-parameter"><a href="../classes/_index_.board2d.board.html" class="tsd-kind-icon">Board</a></li>
-								<li class="tsd-kind-class tsd-parent-kind-namespace"><a href="../classes/_index_.board2d.pos.html" class="tsd-kind-icon">Pos</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-namespace"><a href="../classes/_index_.board2d.posimmutable.html" class="tsd-kind-icon">Pos<wbr>Immutable</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-namespace"><a href="../classes/_index_.board2d.posmutable.html" class="tsd-kind-icon">Pos<wbr>Mutable</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-namespace"><a href="../interfaces/_index_.board2d.pos.html" class="tsd-kind-icon">Pos</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -94,13 +101,6 @@
 								<li class="tsd-kind-type-alias tsd-parent-kind-namespace"><a href="_index_.board2d.html#y" class="tsd-kind-icon">Y</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section tsd-is-not-exported">
-							<h3>Variables</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported"><a href="_index_.board2d.html#xnominality" class="tsd-kind-icon">XNominality</a></li>
-								<li class="tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported"><a href="_index_.board2d.html#ynominality" class="tsd-kind-icon">YNominality</a></li>
-							</ul>
-						</section>
 					</div>
 				</section>
 			</section>
@@ -109,10 +109,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 					<a name="valueandpos" class="tsd-anchor"></a>
 					<h3>Value<wbr>And<wbr>Pos</h3>
-					<div class="tsd-signature tsd-kind-icon">Value<wbr>And<wbr>Pos&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_index_.board2d.pos.html" class="tsd-signature-type">Pos</a><span class="tsd-signature-symbol">; </span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> }</span></div>
+					<div class="tsd-signature tsd-kind-icon">Value<wbr>And<wbr>Pos&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a><span class="tsd-signature-symbol">; </span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/542c31a/src/index.ts#L258">index.ts:258</a></li>
+							<li>Defined in <a href="https://github.com/naosim/board2d/blob/7fdde3c/src/index.ts#L309">index.ts:309</a></li>
 						</ul>
 					</aside>
 					<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -125,7 +125,7 @@
 						<h4>Type declaration</h4>
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter">
-								<h5>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+								<h5>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a></h5>
 							</li>
 							<li class="tsd-parameter">
 								<h5>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span></h5>
@@ -139,9 +139,15 @@
 					<div class="tsd-signature tsd-kind-icon">X<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>__computed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/542c31a/src/index.ts#L3">index.ts:3</a></li>
+							<li>Defined in <a href="https://github.com/naosim/board2d/blob/7fdde3c/src/index.ts#L10">index.ts:10</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>X座標
+							number型の拡張</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace">
 					<a name="y" class="tsd-anchor"></a>
@@ -149,32 +155,15 @@
 					<div class="tsd-signature tsd-kind-icon">Y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>__computed<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/542c31a/src/index.ts#L6">index.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/naosim/board2d/blob/7fdde3c/src/index.ts#L20">index.ts:20</a></li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-not-exported">
-				<h2>Variables</h2>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported">
-					<a name="xnominality" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> XNominality</h3>
-					<div class="tsd-signature tsd-kind-icon">XNominality<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">symbol</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/542c31a/src/index.ts#L2">index.ts:2</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported">
-					<a name="ynominality" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagConst">Const</span> YNominality</h3>
-					<div class="tsd-signature tsd-kind-icon">YNominality<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">symbol</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/542c31a/src/index.ts#L5">index.ts:5</a></li>
-						</ul>
-					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Y座標
+							number型の拡張</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -195,7 +184,13 @@
 						<a href="../classes/_index_.board2d.board.html" class="tsd-kind-icon">Board</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-namespace">
-						<a href="../classes/_index_.board2d.pos.html" class="tsd-kind-icon">Pos</a>
+						<a href="../classes/_index_.board2d.posimmutable.html" class="tsd-kind-icon">Pos<wbr>Immutable</a>
+					</li>
+					<li class=" tsd-kind-class tsd-parent-kind-namespace">
+						<a href="../classes/_index_.board2d.posmutable.html" class="tsd-kind-icon">Pos<wbr>Mutable</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="../interfaces/_index_.board2d.pos.html" class="tsd-kind-icon">Pos</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 						<a href="_index_.board2d.html#valueandpos" class="tsd-kind-icon">Value<wbr>And<wbr>Pos</a>
@@ -205,12 +200,6 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
 						<a href="_index_.board2d.html#y" class="tsd-kind-icon">Y</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported">
-						<a href="_index_.board2d.html#xnominality" class="tsd-kind-icon">XNominality</a>
-					</li>
-					<li class=" tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported">
-						<a href="_index_.board2d.html#ynominality" class="tsd-kind-icon">YNominality</a>
 					</li>
 				</ul>
 			</nav>

@@ -17,9 +17,9 @@ var board2d;
 (function (board2d) {
     var _xSize, _ySize, _values;
     /**
-     * 位置
+     * 位置(不変)
      */
-    class Pos {
+    class PosImmutable {
         constructor(x, y) {
             this.x = x;
             this.y = y;
@@ -28,7 +28,7 @@ var board2d;
             return this.addXY(pos.x, pos.y);
         }
         addXY(x, y) {
-            return new Pos(this.x + x, this.y + y);
+            return new PosImmutable(this.x + x, this.y + y);
         }
         /**
          * 方向を加えた位置を取得する
@@ -41,39 +41,76 @@ var board2d;
          * @param direction
          */
         addDirection(direction) {
-            return this.add(Pos.createFromDirection(direction));
+            return this.add(PosImmutable.createFromDirection(direction));
+        }
+        static createFromPos(pos) {
+            return new PosImmutable(pos.x, pos.y);
         }
         static createFromDirection(direction) {
             if (direction == Direction.up) {
-                return new Pos(0, -1);
+                return new PosImmutable(0, -1);
             }
             else if (direction == Direction.down) {
-                return new Pos(0, 1);
+                return new PosImmutable(0, 1);
             }
             else if (direction == Direction.right) {
-                return new Pos(1, 0);
+                return new PosImmutable(1, 0);
             }
             else if (direction == Direction.left) {
-                return new Pos(-1, 0);
+                return new PosImmutable(-1, 0);
             }
             else if (direction == Direction.upRight) {
-                return new Pos(1, -1);
+                return new PosImmutable(1, -1);
             }
             else if (direction == Direction.upLeft) {
-                return new Pos(-1, -1);
+                return new PosImmutable(-1, -1);
             }
             else if (direction == Direction.downRight) {
-                return new Pos(1, 1);
+                return new PosImmutable(1, 1);
             }
             else if (direction == Direction.downLeft) {
-                return new Pos(-1, 1);
+                return new PosImmutable(-1, 1);
             }
             else {
                 throw new Error('unknown direction');
             }
         }
     }
-    board2d.Pos = Pos;
+    board2d.PosImmutable = PosImmutable;
+    /**
+     * 位置
+     */
+    class PosMutable {
+        constructor(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        add(pos) {
+            return this.addXY(pos.x, pos.y);
+        }
+        addXY(x, y) {
+            this.x = this.x + x;
+            this.y = this.y + y;
+            return this;
+        }
+        /**
+         * 方向を加えた位置を取得する
+         *
+         * 現在(x, y) = (0, 0)にいる場合
+         * up なら    ( 0, -1)
+         * down なら  ( 0,  1)
+         * right なら ( 1,  0)
+         * left なら  (-1,  0)
+         * @param direction
+         */
+        addDirection(direction) {
+            return this.add(PosImmutable.createFromDirection(direction));
+        }
+        static createFromPos(pos) {
+            return new PosMutable(pos.x, pos.y);
+        }
+    }
+    board2d.PosMutable = PosMutable;
     /**
      * 盤
      *
@@ -110,18 +147,6 @@ var board2d;
         get values() { return __classPrivateFieldGet(this, _values); }
         /**
          * 盤を更新する
-         * @deprecated
-         *
-         * @param pos
-         * @param value
-         */
-        put(pos, value) {
-            __classPrivateFieldGet(this, _values)[pos.y][pos.x] = value;
-            return this;
-        }
-        /**
-         * 盤を更新する
-         * @deprecated
          *
          * @param pos
          * @param value
@@ -144,7 +169,7 @@ var board2d;
          * @param pos
          * @param value
          */
-        putImmutable(pos, value) {
+        put(pos, value) {
             var result = Board.create(this);
             __classPrivateFieldGet(result, _values)[pos.y][pos.x] = value;
             return result;
@@ -156,7 +181,7 @@ var board2d;
         forEach(callback) {
             for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
                 for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    callback(new Pos(x, y), __classPrivateFieldGet(this, _values)[y][x]);
+                    callback(new PosImmutable(x, y), __classPrivateFieldGet(this, _values)[y][x]);
                 }
             }
         }
@@ -212,7 +237,7 @@ var board2d;
         some(check) {
             for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
                 for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    if (check(new Pos(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
+                    if (check(new PosImmutable(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
                         return true; // 1つでも見つかったら即返す
                     }
                 }
@@ -222,9 +247,9 @@ var board2d;
         find(check) {
             for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
                 for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    if (check(new Pos(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
+                    if (check(new PosImmutable(x, y), __classPrivateFieldGet(this, _values)[y][x])) {
                         return {
-                            pos: new Pos(x, y),
+                            pos: new PosImmutable(x, y),
                             value: __classPrivateFieldGet(this, _values)[y][x]
                         }; // 1つでも見つかったら即返す
                     }
@@ -238,7 +263,7 @@ var board2d;
          * @param direction
          */
         getFromDrection(pos, direction) {
-            var p = pos.addDirection(direction);
+            var p = PosImmutable.createFromPos(pos).addDirection(direction);
             var v = this.getValue(p);
             if (v === undefined) {
                 return undefined;

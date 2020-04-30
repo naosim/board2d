@@ -1,22 +1,45 @@
 export module board2d {
+  /**
+   * @ignore
+   */
   declare const XNominality: unique symbol
+  /**
+   * X座標
+   * number型の拡張
+   */
   export type X = number & { [XNominality]: never }
 
+  /**
+   * @ignore
+   */
   declare const YNominality: unique symbol
+  /**
+   * Y座標
+   * number型の拡張
+   */
   export type Y = number & { [YNominality]: never }
 
   /**
    * 位置
    */
-  export class Pos {
-    constructor(public x: X, public y: Y) {
+  export interface Pos {
+    readonly x: X;
+    readonly y: Y;
+  }
+
+  /**
+   * 位置(不変)
+   */
+  export class PosImmutable implements Pos {
+    constructor(readonly x: X, readonly y: Y) {
     }
-    add(pos: Pos): Pos {
+
+    add(pos: Pos): PosImmutable {
       return this.addXY(pos.x, pos.y);
     }
 
     addXY(x: X, y: Y) {
-      return new Pos(this.x + x as X, this.y + y as Y);
+      return new PosImmutable(this.x + x as X, this.y + y as Y);
     }
 
     /**
@@ -29,30 +52,71 @@ export module board2d {
      * left なら  (-1,  0)
      * @param direction
      */
-    addDirection(direction: Direction): Pos {
-      return this.add(Pos.createFromDirection(direction));
+    addDirection(direction: Direction): PosImmutable {
+      return this.add(PosImmutable.createFromDirection(direction));
     }
-    static createFromDirection(direction: Direction): Pos {
+
+    static createFromPos(pos: Pos): PosImmutable {
+      return new PosImmutable(pos.x, pos.y);
+    }
+
+    static createFromDirection(direction: Direction): PosImmutable {
       if(direction == Direction.up) {
-        return new Pos(0 as X, -1 as Y);
+        return new PosImmutable(0 as X, -1 as Y);
       } else if(direction == Direction.down) {
-        return new Pos(0 as X, 1 as Y);
+        return new PosImmutable(0 as X, 1 as Y);
       } else if(direction == Direction.right) {
-        return new Pos(1 as X, 0 as Y);
+        return new PosImmutable(1 as X, 0 as Y);
       } else if(direction == Direction.left) {
-        return new Pos(-1 as X, 0 as Y);
+        return new PosImmutable(-1 as X, 0 as Y);
       } else if(direction == Direction.upRight) {
-        return new Pos(1 as X, -1 as Y);
+        return new PosImmutable(1 as X, -1 as Y);
       } else if(direction == Direction.upLeft) {
-        return new Pos(-1 as X, -1 as Y);
+        return new PosImmutable(-1 as X, -1 as Y);
       } else if(direction == Direction.downRight) {
-        return new Pos(1 as X, 1 as Y);
+        return new PosImmutable(1 as X, 1 as Y);
       } else if(direction == Direction.downLeft) {
-        return new Pos(-1 as X, 1 as Y);
+        return new PosImmutable(-1 as X, 1 as Y);
       } else {
         throw new Error('unknown direction')
       }
     }
+  }
+
+  /**
+   * 位置
+   */
+  export class PosMutable {
+    constructor(public x: X, public y: Y) {
+    }
+    add(pos: Pos): PosMutable {
+      return this.addXY(pos.x, pos.y);
+    }
+
+    addXY(x: X, y: Y): PosMutable {
+      this.x = this.x + x as X;
+      this.y = this.y + y as Y;
+      return this;
+    }
+
+    /**
+     * 方向を加えた位置を取得する
+     *
+     * 現在(x, y) = (0, 0)にいる場合
+     * up なら    ( 0, -1)
+     * down なら  ( 0,  1)
+     * right なら ( 1,  0)
+     * left なら  (-1,  0)
+     * @param direction
+     */
+    addDirection(direction: Direction): PosMutable {
+      return this.add(PosImmutable.createFromDirection(direction));
+    }
+
+    static createFromPos(pos: Pos): PosMutable {
+      return new PosMutable(pos.x, pos.y);
+    }
+    
   }
 
   /**
@@ -95,19 +159,6 @@ export module board2d {
 
     /**
      * 盤を更新する
-     * @deprecated
-     * 
-     * @param pos
-     * @param value
-     */
-    put(pos: Pos, value: T | null): Board<T> {
-      this.#values[pos.y][pos.x] = value;
-      return this;
-    }
-
-    /**
-     * 盤を更新する
-     * @deprecated
      * 
      * @param pos
      * @param value
@@ -131,7 +182,7 @@ export module board2d {
      * @param pos
      * @param value
      */
-    putImmutable(pos: Pos, value: T | null): Board<T> {
+    put(pos: Pos, value: T | null): Board<T> {
       var result = Board.create(this);
       result.#values[pos.y][pos.x] = value;
       return result;
@@ -141,10 +192,10 @@ export module board2d {
      * callback関数を、盤上の各セルに対して一度ずつ実行する
      * @param callback
      */
-    forEach(callback: (pos: Pos, value: T | null)=>void) {
+    forEach(callback: (pos: PosImmutable, value: T | null)=>void) {
       for(var y = 0 as Y; y < this.#ySize; y++) {
         for(var x = 0 as X; x < this.#xSize; x++) {
-          callback(new Pos(x, y), this.#values[y][x])
+          callback(new PosImmutable(x, y), this.#values[y][x])
         }
       }
     }
@@ -202,10 +253,10 @@ export module board2d {
       return result;
     }
 
-    some(check: (pos: Pos, value: T | null)=>boolean): boolean {
+    some(check: (pos: PosImmutable, value: T | null)=>boolean): boolean {
       for(var y: Y = 0 as Y; y < this.#ySize; y++) {
         for(var x: X = 0 as X; x < this.#xSize; x++) {
-          if(check(new Pos(x, y), this.#values[y][x])) {
+          if(check(new PosImmutable(x, y), this.#values[y][x])) {
             return true;// 1つでも見つかったら即返す
           }
         }
@@ -216,9 +267,9 @@ export module board2d {
     find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
       for(var y = 0 as Y; y < this.#ySize; y++) {
         for(var x = 0 as X; x < this.#xSize; x++) {
-          if(check(new Pos(x, y), this.#values[y][x])) {
+          if(check(new PosImmutable(x, y), this.#values[y][x])) {
             return {
-              pos: new Pos(x, y),
+              pos: new PosImmutable(x, y),
               value: this.#values[y][x]
             };// 1つでも見つかったら即返す
           }
@@ -233,7 +284,7 @@ export module board2d {
      * @param direction
      */
     getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined {
-      var p: Pos = pos.addDirection(direction);
+      var p = PosImmutable.createFromPos(pos).addDirection(direction);
       var v = this.getValue(p);
       if(v === undefined) {
         return undefined;
@@ -256,8 +307,8 @@ export module board2d {
   }
 
   export type ValueAndPos<T> = {
-    pos: Pos,
-    value:T
+    readonly pos: PosImmutable,
+    readonly value:T
   }
 
   /**
