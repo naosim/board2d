@@ -27,6 +27,7 @@ export declare module board2d {
          * @param direction
          */
         addDirection(direction: Direction): Pos;
+        static createFromDirection(direction: Direction): Pos;
     }
     /**
      * 盤
@@ -150,7 +151,11 @@ export declare module board2d {
         up = 0,
         down = 1,
         left = 2,
-        right = 3
+        right = 3,
+        upLeft = 4,
+        upRight = 5,
+        downLeft = 6,
+        downRight = 7
     }
     export {};
 }

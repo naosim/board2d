@@ -41,17 +41,32 @@ var board2d;
          * @param direction
          */
         addDirection(direction) {
+            return this.add(Pos.createFromDirection(direction));
+        }
+        static createFromDirection(direction) {
             if (direction == Direction.up) {
-                return this.addXY(0, -1);
+                return new Pos(0, -1);
             }
             else if (direction == Direction.down) {
-                return this.addXY(0, 1);
+                return new Pos(0, 1);
             }
             else if (direction == Direction.right) {
-                return this.addXY(1, 0);
+                return new Pos(1, 0);
             }
             else if (direction == Direction.left) {
-                return this.addXY(-1, 0);
+                return new Pos(-1, 0);
+            }
+            else if (direction == Direction.upRight) {
+                return new Pos(1, -1);
+            }
+            else if (direction == Direction.upLeft) {
+                return new Pos(-1, -1);
+            }
+            else if (direction == Direction.downRight) {
+                return new Pos(1, 1);
+            }
+            else if (direction == Direction.downLeft) {
+                return new Pos(-1, 1);
             }
             else {
                 throw new Error('unknown direction');
@@ -254,5 +269,9 @@ var board2d;
         Direction[Direction["down"] = 1] = "down";
         Direction[Direction["left"] = 2] = "left";
         Direction[Direction["right"] = 3] = "right";
+        Direction[Direction["upLeft"] = 4] = "upLeft";
+        Direction[Direction["upRight"] = 5] = "upRight";
+        Direction[Direction["downLeft"] = 6] = "downLeft";
+        Direction[Direction["downRight"] = 7] = "downRight";
     })(Direction = board2d.Direction || (board2d.Direction = {}));
 })(board2d = exports.board2d || (exports.board2d = {}));

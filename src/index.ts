@@ -30,14 +30,25 @@ export module board2d {
      * @param direction
      */
     addDirection(direction: Direction): Pos {
+      return this.add(Pos.createFromDirection(direction));
+    }
+    static createFromDirection(direction: Direction): Pos {
       if(direction == Direction.up) {
-        return this.addXY(0 as X, -1 as Y);
+        return new Pos(0 as X, -1 as Y);
       } else if(direction == Direction.down) {
-        return this.addXY(0 as X, 1 as Y);
+        return new Pos(0 as X, 1 as Y);
       } else if(direction == Direction.right) {
-        return this.addXY(1 as X, 0 as Y);
+        return new Pos(1 as X, 0 as Y);
       } else if(direction == Direction.left) {
-        return this.addXY(-1 as X, 0 as Y);
+        return new Pos(-1 as X, 0 as Y);
+      } else if(direction == Direction.upRight) {
+        return new Pos(1 as X, -1 as Y);
+      } else if(direction == Direction.upLeft) {
+        return new Pos(-1 as X, -1 as Y);
+      } else if(direction == Direction.downRight) {
+        return new Pos(1 as X, 1 as Y);
+      } else if(direction == Direction.downLeft) {
+        return new Pos(-1 as X, 1 as Y);
       } else {
         throw new Error('unknown direction')
       }
@@ -253,6 +264,7 @@ export module board2d {
    * 方向
    */
   export enum Direction {
-    up, down, left, right
+    up, down, left, right,
+    upLeft, upRight, downLeft, downRight
   }
 }
