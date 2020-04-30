@@ -127,6 +127,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_index_.board2d.board.html#getvaluefromxy" class="tsd-kind-icon">get<wbr>Value<wbr>FromXY</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_index_.board2d.board.html#put" class="tsd-kind-icon">put</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_index_.board2d.board.html#putimmutable" class="tsd-kind-icon">put<wbr>Immutable</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_index_.board2d.board.html#putmutable" class="tsd-kind-icon">put<wbr>Mutable</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_index_.board2d.board.html#some" class="tsd-kind-icon">some</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static"><a href="_index_.board2d.board.html#create" class="tsd-kind-icon">create</a></li>
 							</ul>
@@ -146,9 +147,15 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L51">index.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L57">index.ts:57</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。</p>
+									<pre><code class="language-javascript"><span class="hljs-keyword">var</span> board = <span class="hljs-keyword">new</span> board2d.Board&lt;string&gt;(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>);</code></pre>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -156,6 +163,10 @@
 								</li>
 								<li>
 									<h5>ySize: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_index_.board2d.board.html" class="tsd-signature-type">Board</a></h4>
@@ -175,7 +186,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L60">index.ts:60</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L83">index.ts:83</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -192,9 +203,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L58">index.ts:58</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L78">index.ts:78</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>盤のxサイズ</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
@@ -209,9 +225,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L59">index.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L82">index.ts:82</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>盤のyサイズ</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
@@ -229,7 +250,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L125">index.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L188">index.ts:188</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_index_.board2d.board.html" class="tsd-signature-type">Board</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -246,13 +267,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L121">index.ts:121</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L184">index.ts:184</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>指定した位置に駒があるかどうかを取得する</p>
+								</div>
+								<p>駒がある場合はtrueを返す。
+								駒がない、または、位置が盤の外側の場合、falseを返す。</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>pos: <a href="_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -269,7 +299,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L142">index.ts:142</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L205">index.ts:205</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -313,12 +343,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L87">index.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L133">index.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>call関数を、配列の各要素に対して一度ずつ実行する</p>
+									<p>callback関数を、盤上の各セルに対して一度ずつ実行する</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -364,7 +394,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L161">index.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L224">index.ts:224</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,13 +427,18 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L101">index.ts:101</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L155">index.ts:155</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>指定した位置にある要素を取得</p>
+									<p>指定した位置にある駒を取得する</p>
 								</div>
+								<p>指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。</p>
+								<pre><code class="language-javascript"><span class="hljs-keyword">var</span> board = <span class="hljs-keyword">new</span> board2d.Board&lt;string&gt;(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>).putImmutable(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), <span class="hljs-string">'x'</span>);
+<span class="hljs-keyword">var</span> a = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)); <span class="hljs-comment">// x</span>
+<span class="hljs-keyword">var</span> b = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)); <span class="hljs-comment">// null</span>
+<span class="hljs-keyword">var</span> c = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>)); <span class="hljs-comment">// undefined</span></code></pre>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -420,27 +455,28 @@
 					<a name="getvaluefromxy" class="tsd-anchor"></a>
 					<h3>get<wbr>Value<wbr>FromXY</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<wbr>FromXY<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, y<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<wbr>FromXY<span class="tsd-signature-symbol">(</span>x<span class="tsd-signature-symbol">: </span><a href="../modules/_index_.board2d.html#x" class="tsd-signature-type">X</a>, y<span class="tsd-signature-symbol">: </span><a href="../modules/_index_.board2d.html#y" class="tsd-signature-type">Y</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L111">index.ts:111</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L167">index.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>指定した位置にある要素を取得</p>
+									<p>指定した位置にある駒を取得する</p>
 								</div>
+								<p>引数がx, yであること以外は、<code>getValue()</code>と同じ。</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>x: <span class="tsd-signature-type">number</span></h5>
+									<h5>x: <a href="../modules/_index_.board2d.html#x" class="tsd-signature-type">X</a></h5>
 								</li>
 								<li>
-									<h5>y: <span class="tsd-signature-type">number</span></h5>
+									<h5>y: <a href="../modules/_index_.board2d.html#y" class="tsd-signature-type">Y</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
@@ -458,13 +494,17 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L67">index.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L92">index.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>盤を更新する</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd></dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -491,13 +531,56 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L77">index.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L123">index.ts:123</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>盤を更新する (イミュータブル)</p>
+									<p>盤に駒を置く (イミュータブル)
+									盤上のセルに駒をおきます。下記では3x3の盤上の<code>(x, y)=(2, 2)</code>に<code>&quot;x&quot;</code>という駒を置いています。</p>
+									<pre><code class="language-javascript"><span class="hljs-keyword">var</span> board = <span class="hljs-keyword">new</span> board2d.Board&lt;string&gt;(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>);
+<span class="hljs-keyword">var</span> newBoard = board.putImmutable(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>), <span class="hljs-string">'x'</span>); <span class="hljs-comment">// 駒を置く</span>
+<span class="hljs-built_in">console</span>.log(board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)));    <span class="hljs-comment">// null(空)</span>
+<span class="hljs-built_in">console</span>.log(newBoard.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>))); <span class="hljs-comment">// x</span></code></pre>
 								</div>
+								<p>メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、<code>board変数</code>の状態は変化しません。また引数の<code>value</code>に<code>null</code>を指定した場合、そのセルは空になります。</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>pos: <a href="_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+								</li>
+								<li>
+									<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+									<div class="tsd-comment tsd-typography">
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="_index_.board2d.board.html" class="tsd-signature-type">Board</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="putmutable" class="tsd-anchor"></a>
+					<h3>put<wbr>Mutable</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">put<wbr>Mutable<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_index_.board2d.board.html" class="tsd-signature-type">Board</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L104">index.ts:104</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>盤を更新する</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd></dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
@@ -524,7 +607,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L131">index.ts:131</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L194">index.ts:194</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -568,7 +651,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/abdcd91/src/index.ts#L177">index.ts:177</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/67b9209/src/index.ts#L240">index.ts:240</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -654,6 +737,9 @@
 								<a href="_index_.board2d.board.html#putimmutable" class="tsd-kind-icon">put<wbr>Immutable</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_index_.board2d.board.html#putmutable" class="tsd-kind-icon">put<wbr>Mutable</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_index_.board2d.board.html#some" class="tsd-kind-icon">some</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter tsd-is-static">
@@ -668,6 +754,18 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
 						<a href="../modules/_index_.board2d.html#valueandpos" class="tsd-kind-icon">Value<wbr>And<wbr>Pos</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_index_.board2d.html#x" class="tsd-kind-icon">X</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
+						<a href="../modules/_index_.board2d.html#y" class="tsd-kind-icon">Y</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported">
+						<a href="../modules/_index_.board2d.html#xnominality" class="tsd-kind-icon">XNominality</a>
+					</li>
+					<li class=" tsd-kind-variable tsd-parent-kind-namespace tsd-is-not-exported">
+						<a href="../modules/_index_.board2d.html#ynominality" class="tsd-kind-icon">YNominality</a>
 					</li>
 				</ul>
 			</nav>

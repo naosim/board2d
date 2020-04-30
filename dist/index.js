@@ -67,6 +67,15 @@ var board2d;
      *
      */
     class Board {
+        /**
+         * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
+         * ```javascript
+         * var board = new board2d.Board<string>(3, 3);
+         * ```
+         *
+         * @param xSize
+         * @param ySize
+         */
         constructor(xSize, ySize) {
             _xSize.set(this, void 0);
             _ySize.set(this, void 0);
@@ -75,11 +84,19 @@ var board2d;
             __classPrivateFieldSet(this, _ySize, ySize);
             __classPrivateFieldSet(this, _values, new Array(ySize).fill(null).map(v => new Array(xSize).fill(null))); // 3x3
         }
+        /**
+         * 盤のxサイズ
+         */
         get xSize() { return __classPrivateFieldGet(this, _xSize); }
+        /**
+         * 盤のyサイズ
+         */
         get ySize() { return __classPrivateFieldGet(this, _ySize); }
         get values() { return __classPrivateFieldGet(this, _values); }
         /**
          * 盤を更新する
+         * @deprecated
+         *
          * @param pos
          * @param value
          */
@@ -88,7 +105,27 @@ var board2d;
             return this;
         }
         /**
-         * 盤を更新する (イミュータブル)
+         * 盤を更新する
+         * @deprecated
+         *
+         * @param pos
+         * @param value
+         */
+        putMutable(pos, value) {
+            __classPrivateFieldGet(this, _values)[pos.y][pos.x] = value;
+            return this;
+        }
+        /**
+         * 盤に駒を置く (イミュータブル)
+         * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
+         * ```javascript
+         * var board = new board2d.Board<string>(3, 3);
+         * var newBoard = board.putImmutable(new board2d.Pos(2, 2), 'x'); // 駒を置く
+         * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
+         * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
+         * ```
+         *
+         * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
          * @param pos
          * @param value
          */
@@ -98,7 +135,7 @@ var board2d;
             return result;
         }
         /**
-         * call関数を、配列の各要素に対して一度ずつ実行する
+         * callback関数を、盤上の各セルに対して一度ずつ実行する
          * @param callback
          */
         forEach(callback) {
@@ -109,7 +146,15 @@ var board2d;
             }
         }
         /**
-         * 指定した位置にある要素を取得
+         * 指定した位置にある駒を取得する
+         *
+         * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+         * ```javascript
+         * var board = new board2d.Board<string>(2, 2).putImmutable(new board2d.Pos(1, 1), 'x');
+         * var a = board.getValue(new board2d.Pos(1, 1)); // x
+         * var b = board.getValue(new board2d.Pos(0, 0)); // null
+         * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
+         * ```
          *
          * @param pos
          * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
@@ -118,7 +163,9 @@ var board2d;
             return this.getValueFromXY(pos.x, pos.y);
         }
         /**
-         * 指定した位置にある要素を取得
+         * 指定した位置にある駒を取得する
+         *
+         * 引数がx, yであること以外は、`getValue()`と同じ。
          * @param x
          * @param y
          * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
@@ -132,6 +179,13 @@ var board2d;
             }
             return __classPrivateFieldGet(this, _values)[y][x];
         }
+        /**
+         * 指定した位置に駒があるかどうかを取得する
+         *
+         * 駒がある場合はtrueを返す。
+         * 駒がない、または、位置が盤の外側の場合、falseを返す。
+         * @param pos
+         */
         exists(pos) {
             return this.getValue(pos) !== null && this.getValue(pos) !== undefined;
         }
