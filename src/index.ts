@@ -29,7 +29,7 @@ export module board2d {
    */
   declare const SkipCopyNominality: unique symbol
   /**
-   * コピーを省略する
+   * コピーを省略するフラグ
    * boolean型の拡張
    */
   export type SkipCopy = boolean & { [SkipCopyNominality]: never }
@@ -37,7 +37,7 @@ export module board2d {
   /**
    * 位置
    */
-  export interface Pos {
+  export interface PosReadable {
     readonly x: X;
     readonly y: Y;
   }
@@ -45,16 +45,16 @@ export module board2d {
   /**
    * 位置(不変)
    */
-  export class PosImmutable implements Pos {
+  export class Pos implements PosReadable {
     constructor(readonly x: X, readonly y: Y) {
     }
 
-    add(pos: Pos): PosImmutable {
+    add(pos: PosReadable): Pos {
       return this.addXY(pos.x, pos.y);
     }
 
-    addXY(x: X, y: Y) {
-      return new PosImmutable(this.x + x as X, this.y + y as Y);
+    addXY(x: X, y: Y): Pos {
+      return new Pos(this.x + x as X, this.y + y as Y);
     }
 
     /**
@@ -67,31 +67,31 @@ export module board2d {
      * left なら  (-1,  0)
      * @param direction
      */
-    addDirection(direction: Direction): PosImmutable {
-      return this.add(PosImmutable.createFromDirection(direction));
+    addDirection(direction: Direction): Pos {
+      return this.add(Pos.createFromDirection(direction));
     }
 
-    static createFromPos(pos: Pos): PosImmutable {
-      return new PosImmutable(pos.x, pos.y);
+    static createFromPos(pos: PosReadable): Pos {
+      return new Pos(pos.x, pos.y);
     }
 
-    static createFromDirection(direction: Direction): PosImmutable {
+    static createFromDirection(direction: Direction): Pos {
       if(direction == Direction.up) {
-        return new PosImmutable(0 as X, -1 as Y);
+        return new Pos(0 as X, -1 as Y);
       } else if(direction == Direction.down) {
-        return new PosImmutable(0 as X, 1 as Y);
+        return new Pos(0 as X, 1 as Y);
       } else if(direction == Direction.right) {
-        return new PosImmutable(1 as X, 0 as Y);
+        return new Pos(1 as X, 0 as Y);
       } else if(direction == Direction.left) {
-        return new PosImmutable(-1 as X, 0 as Y);
+        return new Pos(-1 as X, 0 as Y);
       } else if(direction == Direction.upRight) {
-        return new PosImmutable(1 as X, -1 as Y);
+        return new Pos(1 as X, -1 as Y);
       } else if(direction == Direction.upLeft) {
-        return new PosImmutable(-1 as X, -1 as Y);
+        return new Pos(-1 as X, -1 as Y);
       } else if(direction == Direction.downRight) {
-        return new PosImmutable(1 as X, 1 as Y);
+        return new Pos(1 as X, 1 as Y);
       } else if(direction == Direction.downLeft) {
-        return new PosImmutable(-1 as X, 1 as Y);
+        return new Pos(-1 as X, 1 as Y);
       } else {
         throw new Error('unknown direction')
       }
@@ -101,10 +101,10 @@ export module board2d {
   /**
    * 位置
    */
-  export class PosMutable {
+  export class PosMutable implements PosReadable{
     constructor(public x: X, public y: Y) {
     }
-    add(pos: Pos): PosMutable {
+    add(pos: PosReadable): PosMutable {
       return this.addXY(pos.x, pos.y);
     }
 
@@ -125,18 +125,73 @@ export module board2d {
      * @param direction
      */
     addDirection(direction: Direction): PosMutable {
-      return this.add(PosImmutable.createFromDirection(direction));
+      return this.add(Pos.createFromDirection(direction));
     }
 
-    static createFromPos(pos: Pos): PosMutable {
+    static createFromPos(pos: PosReadable): PosMutable {
       return new PosMutable(pos.x, pos.y);
     }
-    
   }
 
-  class BoardCore<T> {
+  interface BoardReadable<T> {
+    readonly xSize: number;
+    readonly ySize: number;
+    /**
+     * callback関数を、盤上の各セルに対して一度ずつ実行する
+     * @param callback
+     */
+    forEach(callback: (pos: Pos, value: T | null)=>void): void;
+
+    /**
+     * 指定した位置にある駒を取得する
+     *
+     * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+     * ```javascript
+     * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
+     * var a = board.getValue(new board2d.Pos(1, 1)); // x
+     * var b = board.getValue(new board2d.Pos(0, 0)); // null
+     * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
+     * ```
+     *
+     * @param pos
+     * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+     */
+    getValue(pos: PosReadable): T | null | undefined;
+
+    /**
+     * 指定した位置にある駒を取得する
+     *
+     * 引数がx, yであること以外は、`getValue()`と同じ。
+     * @param x
+     * @param y
+     * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
+     */
+    getValueFromXY(x: X, y: Y): T | null | undefined;
+
+    /**
+     * 指定した位置に駒があるかどうかを取得する
+     *
+     * 駒がある場合はtrueを返す。
+     * 駒がない、または、位置が盤の外側の場合、falseを返す。
+     * @param pos
+     */
+    exists(pos: PosReadable): boolean;
+
+    some(check: (pos: Pos, value: T | null)=>boolean): boolean;
+
+    find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null;
+
+    /**
+     * posからdirectionの方向に1歩進んだ場所を取得する
+     * @param pos
+     * @param direction
+     */
+    getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+  }
+
+  class BoardCore<T> implements BoardReadable<T> {
     readonly values: (T | null)[][]; // T or null
-    readonly #poses: PosImmutable[][];
+    readonly #poses: Pos[][];
 
     /**
      * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
@@ -149,14 +204,14 @@ export module board2d {
      */
     constructor(readonly xSize:number, readonly ySize: number) {
       this.values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
-      this.#poses = new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x as X, y as Y)));
+      this.#poses = new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new Pos(x as X, y as Y)));
     }
 
     /**
      * callback関数を、盤上の各セルに対して一度ずつ実行する
      * @param callback
      */
-    forEach(callback: (pos: PosImmutable, value: T | null)=>void) {
+    forEach(callback: (pos: Pos, value: T | null)=>void) {
       for(var y = 0 as Y; y < this.ySize; y++) {
         for(var x = 0 as X; x < this.xSize; x++) {
           callback(this.#poses[y][x], this.values[y][x])
@@ -178,7 +233,7 @@ export module board2d {
      * @param pos
      * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
      */
-    getValue(pos: Pos): T | null | undefined {
+    getValue(pos: PosReadable): T | null | undefined {
       return this.getValueFromXY(pos.x, pos.y);
     }
 
@@ -207,11 +262,11 @@ export module board2d {
      * 駒がない、または、位置が盤の外側の場合、falseを返す。
      * @param pos
      */
-    exists(pos: Pos): boolean {
+    exists(pos: PosReadable): boolean {
       return this.getValue(pos) !== null && this.getValue(pos) !== undefined;
     }
 
-    some(check: (pos: PosImmutable, value: T | null)=>boolean): boolean {
+    some(check: (pos: Pos, value: T | null)=>boolean): boolean {
       for(var y: Y = 0 as Y; y < this.ySize; y++) {
         for(var x: X = 0 as X; x < this.xSize; x++) {
           if(check(this.#poses[y][x], this.values[y][x])) {
@@ -241,8 +296,8 @@ export module board2d {
      * @param pos
      * @param direction
      */
-    getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined {
-      var p = PosImmutable.createFromPos(pos).addDirection(direction);
+    getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
+      var p = Pos.createFromPos(pos).addDirection(direction);
       var v = this.getValue(p);
       if(v === undefined) {
         return undefined;
@@ -267,33 +322,18 @@ export module board2d {
    * 空のセルにはnullが入っている
    *
    */
-  export class Board<T> {
+  export class Board<T> implements BoardReadable<T> {
     #boardCore: BoardCore<T>;
 
-    /**
-     * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
-     * ```javascript
-     * var board = new board2d.Board<string>(3, 3);
-     * ```
-     *
-     * @param xSize
-     * @param ySize
-     */
     constructor(boardCore: BoardCore<T>, skipCopy: SkipCopy = false as SkipCopy) {
       this.#boardCore = skipCopy ? boardCore : boardCore.copy();
     }
 
-    /**
-     * 盤のxサイズ
-     */
     get xSize(): number { return this.#boardCore.xSize; }
-    /**
-     * 盤のyサイズ
-     */
     get ySize(): number { return this.#boardCore.ySize; }
-    get values(): (T | null)[][] { return this.#boardCore.values; }
 
-    
+    // これを隠蔽したい
+    //get values(): (T | null)[][] { return this.#boardCore.values; }
 
     /**
      * 盤に駒を置く (イミュータブル)
@@ -309,58 +349,25 @@ export module board2d {
      * @param pos
      * @param value
      */
-    put(pos: Pos, value: T | null): Board<T> {
+    put(pos: PosReadable, value: T | null): Board<T> {
       var newBoardCore = this.#boardCore.copy();
       newBoardCore.values[pos.y][pos.x] = value;
       return new Board<T>(newBoardCore, true as SkipCopy);
     }
 
-    /**
-     * callback関数を、盤上の各セルに対して一度ずつ実行する
-     * @param callback
-     */
-    forEach(callback: (pos: PosImmutable, value: T | null)=>void) {
+    forEach(callback: (pos: Pos, value: T | null)=>void) {
       this.#boardCore.forEach(callback);
     }
 
-    /**
-     * 指定した位置にある駒を取得する
-     *
-     * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-     * ```javascript
-     * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
-     * var a = board.getValue(new board2d.Pos(1, 1)); // x
-     * var b = board.getValue(new board2d.Pos(0, 0)); // null
-     * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
-     * ```
-     *
-     * @param pos
-     * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-     */
-    getValue(pos: Pos): T | null | undefined {
+    getValue(pos: PosReadable): T | null | undefined {
       return this.#boardCore.getValue(pos);
     }
 
-    /**
-     * 指定した位置にある駒を取得する
-     *
-     * 引数がx, yであること以外は、`getValue()`と同じ。
-     * @param x
-     * @param y
-     * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
-     */
     getValueFromXY(x: X, y: Y): T | null | undefined {
       return this.#boardCore.getValueFromXY(x, y);
     }
 
-    /**
-     * 指定した位置に駒があるかどうかを取得する
-     *
-     * 駒がある場合はtrueを返す。
-     * 駒がない、または、位置が盤の外側の場合、falseを返す。
-     * @param pos
-     */
-    exists(pos: Pos): boolean {
+    exists(pos: PosReadable): boolean {
       return this.#boardCore.exists(pos);
     }
 
@@ -368,7 +375,7 @@ export module board2d {
       return new Board<T>(this.#boardCore.copy());
     }
 
-    some(check: (pos: PosImmutable, value: T | null)=>boolean): boolean {
+    some(check: (pos: Pos, value: T | null)=>boolean): boolean {
       return this.#boardCore.some(check);
     }
 
@@ -376,12 +383,7 @@ export module board2d {
       return this.#boardCore.find(check);
     }
 
-    /**
-     * posからdirectionの方向に1歩進んだ場所を取得する
-     * @param pos
-     * @param direction
-     */
-    getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined {
+    getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
       return this.#boardCore.getFromDrection(pos, direction);
     }
 
@@ -394,21 +396,58 @@ export module board2d {
     }
   }
 
-  export class BoardMutable<T> {
+  export class BoardMutable<T> implements BoardReadable<T> {
     boardCore: BoardCore<T>;
     constructor(boardCore: BoardCore<T>, skipCopy: SkipCopy = false as SkipCopy) {
       this.boardCore = skipCopy ? boardCore : boardCore.copy();
     }
+
+    get xSize(): number { return this.boardCore.xSize; }
+    get ySize(): number { return this.boardCore.ySize; }
+
     /**
      * 盤を更新する
      * 
      * @param pos
      * @param value
      */
-    put(pos: Pos, value: T | null): BoardMutable<T> {
+    put(pos: PosReadable, value: T | null): BoardMutable<T> {
       this.boardCore.values[pos.y][pos.x] = value;
       return this;
     }
+
+    forEach(callback: (pos: Pos, value: T | null)=>void) {
+      this.boardCore.forEach(callback);
+    }
+
+    getValue(pos: PosReadable): T | null | undefined {
+      return this.boardCore.getValue(pos);
+    }
+
+    getValueFromXY(x: X, y: Y): T | null | undefined {
+      return this.boardCore.getValueFromXY(x, y);
+    }
+
+    exists(pos: PosReadable): boolean {
+      return this.boardCore.exists(pos);
+    }
+
+    copy(): Board<T> {
+      return new Board<T>(this.boardCore.copy());
+    }
+
+    some(check: (pos: Pos, value: T | null)=>boolean): boolean {
+      return this.boardCore.some(check);
+    }
+
+    find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
+      return this.boardCore.find(check);
+    }
+
+    getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
+      return this.boardCore.getFromDrection(pos, direction);
+    }
+
 
     static empty<T>(xSize: number, ySize: number): BoardMutable<T> {
       return new BoardMutable<T>(new BoardCore(xSize, ySize), true as SkipCopy)
@@ -420,7 +459,7 @@ export module board2d {
   }
 
   export type ValueAndPos<T> = {
-    readonly pos: PosImmutable,
+    readonly pos: Pos,
     readonly value:T
   }
 

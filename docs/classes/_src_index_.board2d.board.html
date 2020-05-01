@@ -97,6 +97,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implements</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/_src_index_.board2d.boardreadable.html" class="tsd-signature-type">BoardReadable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -110,7 +116,6 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_src_index_.board2d.board.html#values" class="tsd-kind-icon">values</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_src_index_.board2d.board.html#xsize" class="tsd-kind-icon">x<wbr>Size</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_src_index_.board2d.board.html#ysize" class="tsd-kind-icon">y<wbr>Size</a></li>
 							</ul>
@@ -146,15 +151,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L271">src/index.ts:271</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L326">src/index.ts:326</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。</p>
-									<pre><code class="language-javascript"><span class="hljs-keyword">var</span> board = <span class="hljs-keyword">new</span> board2d.Board&lt;string&gt;(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>);</code></pre>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -172,23 +171,6 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="values" class="tsd-anchor"></a>
-					<h3>values</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> values<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L294">src/index.ts:294</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">[]</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
 					<a name="xsize" class="tsd-anchor"></a>
 					<h3>x<wbr>Size</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
@@ -198,14 +180,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L289">src/index.ts:289</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L332">src/index.ts:332</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>盤のxサイズ</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
@@ -220,14 +197,9 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L293">src/index.ts:293</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L333">src/index.ts:333</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>盤のyサイズ</p>
-								</div>
-							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
 						</li>
 					</ul>
@@ -245,7 +217,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L367">src/index.ts:367</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L374">src/index.ts:374</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_src_index_.board2d.board.html" class="tsd-signature-type">Board</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -256,28 +228,20 @@
 					<a name="exists" class="tsd-anchor"></a>
 					<h3>exists</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">exists<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">exists<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_src_index_.board2d.boardreadable.html">BoardReadable</a>.<a href="../interfaces/_src_index_.board2d.boardreadable.html#exists">exists</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L363">src/index.ts:363</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L370">src/index.ts:370</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>指定した位置に駒があるかどうかを取得する</p>
-								</div>
-								<p>駒がある場合はtrueを返す。
-								駒がない、または、位置が盤の外側の場合、falseを返す。</p>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
+									<h5>pos: <a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -288,30 +252,30 @@
 					<a name="find" class="tsd-anchor"></a>
 					<h3>find</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">find<span class="tsd-signature-symbol">(</span>check<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_src_index_.board2d.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
+						<li class="tsd-signature tsd-kind-icon">find<span class="tsd-signature-symbol">(</span>check<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_src_index_.board2d.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L375">src/index.ts:375</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L382">src/index.ts:382</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>check: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<h5>check: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>pos: <a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+															<h5>pos: <a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
 														</li>
 														<li>
 															<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
@@ -332,37 +296,30 @@
 					<a name="foreach" class="tsd-anchor"></a>
 					<h3>for<wbr>Each</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">for<wbr>Each<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">for<wbr>Each<span class="tsd-signature-symbol">(</span>callback<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L322">src/index.ts:322</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L358">src/index.ts:358</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>callback関数を、盤上の各セルに対して一度ずつ実行する</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>callback: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
+									<h5>callback: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>pos: <a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a></h5>
+															<h5>pos: <a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
 														</li>
 														<li>
 															<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
@@ -383,29 +340,23 @@
 					<a name="getfromdrection" class="tsd-anchor"></a>
 					<h3>get<wbr>From<wbr>Drection</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>From<wbr>Drection<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, direction<span class="tsd-signature-symbol">: </span><a href="../enums/_src_index_.board2d.direction.html" class="tsd-signature-type">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_src_index_.board2d.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>From<wbr>Drection<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a>, direction<span class="tsd-signature-symbol">: </span><a href="../enums/_src_index_.board2d.direction.html" class="tsd-signature-type">Direction</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_src_index_.board2d.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_src_index_.board2d.boardreadable.html">BoardReadable</a>.<a href="../interfaces/_src_index_.board2d.boardreadable.html#getfromdrection">getFromDrection</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L384">src/index.ts:384</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L386">src/index.ts:386</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>posからdirectionの方向に1歩進んだ場所を取得する</p>
-								</div>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+									<h5>pos: <a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a></h5>
 								</li>
 								<li>
 									<h5>direction: <a href="../enums/_src_index_.board2d.direction.html" class="tsd-signature-type">Direction</a></h5>
-									<div class="tsd-comment tsd-typography">
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="../modules/_src_index_.board2d.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
@@ -416,33 +367,23 @@
 					<a name="getvalue" class="tsd-anchor"></a>
 					<h3>get<wbr>Value</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Value<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_src_index_.board2d.boardreadable.html">BoardReadable</a>.<a href="../interfaces/_src_index_.board2d.boardreadable.html#getvalue">getValue</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L340">src/index.ts:340</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L362">src/index.ts:362</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>指定した位置にある駒を取得する</p>
-								</div>
-								<p>指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。</p>
-								<pre><code class="language-javascript"><span class="hljs-keyword">var</span> board = <span class="hljs-keyword">new</span> board2d.Board&lt;string&gt;(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>).put(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), <span class="hljs-string">'x'</span>);
-<span class="hljs-keyword">var</span> a = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)); <span class="hljs-comment">// x</span>
-<span class="hljs-keyword">var</span> b = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)); <span class="hljs-comment">// null</span>
-<span class="hljs-keyword">var</span> c = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">-1</span>, <span class="hljs-number">-1</span>)); <span class="hljs-comment">// undefined</span></code></pre>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+									<h5>pos: <a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
-							<p>空の場合はnullを返す。盤の外側の場合はundefinedを返す。</p>
 						</li>
 					</ul>
 				</section>
@@ -455,16 +396,11 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
+								<p>Implementation of <a href="../interfaces/_src_index_.board2d.boardreadable.html">BoardReadable</a>.<a href="../interfaces/_src_index_.board2d.boardreadable.html#getvaluefromxy">getValueFromXY</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L352">src/index.ts:352</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L366">src/index.ts:366</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>指定した位置にある駒を取得する</p>
-								</div>
-								<p>引数がx, yであること以外は、<code>getValue()</code>と同じ。</p>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -475,7 +411,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
-							<p>空の場合はnullを返す。盤の外側の場合、undefinedを返す。</p>
 						</li>
 					</ul>
 				</section>
@@ -483,13 +418,13 @@
 					<a name="put" class="tsd-anchor"></a>
 					<h3>put</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.board.html" class="tsd-signature-type">Board</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">put<span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.board.html" class="tsd-signature-type">Board</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L312">src/index.ts:312</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L352">src/index.ts:352</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -506,7 +441,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>pos: <a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
+									<h5>pos: <a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-signature-type">PosReadable</a></h5>
 								</li>
 								<li>
 									<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
@@ -522,30 +457,30 @@
 					<a name="some" class="tsd-anchor"></a>
 					<h3>some</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">some<span class="tsd-signature-symbol">(</span>check<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">some<span class="tsd-signature-symbol">(</span>check<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L371">src/index.ts:371</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L378">src/index.ts:378</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>check: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<h5>check: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
 									<ul class="tsd-parameters">
 										<li class="tsd-parameter-signature">
 											<ul class="tsd-signatures tsd-kind-type-literal">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 											</ul>
 											<ul class="tsd-descriptions">
 												<li class="tsd-description">
 													<h4 class="tsd-parameters-title">Parameters</h4>
 													<ul class="tsd-parameters">
 														<li>
-															<h5>pos: <a href="_src_index_.board2d.posimmutable.html" class="tsd-signature-type">PosImmutable</a></h5>
+															<h5>pos: <a href="_src_index_.board2d.pos.html" class="tsd-signature-type">Pos</a></h5>
 														</li>
 														<li>
 															<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
@@ -572,7 +507,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L388">src/index.ts:388</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L390">src/index.ts:390</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_src_index_.board2d.boardmutable.html" class="tsd-signature-type">BoardMutable</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -589,7 +524,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/79bb3fa/src/index.ts#L392">src/index.ts:392</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/59a650c/src/index.ts#L394">src/index.ts:394</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -633,9 +568,6 @@
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="_src_index_.board2d.board.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_src_index_.board2d.board.html#values" class="tsd-kind-icon">values</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_src_index_.board2d.board.html#xsize" class="tsd-kind-icon">x<wbr>Size</a>
@@ -687,13 +619,16 @@
 						<a href="_src_index_.board2d.boardmutable.html" class="tsd-kind-icon">Board<wbr>Mutable</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-namespace">
-						<a href="_src_index_.board2d.posimmutable.html" class="tsd-kind-icon">Pos<wbr>Immutable</a>
+						<a href="_src_index_.board2d.pos.html" class="tsd-kind-icon">Pos</a>
 					</li>
 					<li class=" tsd-kind-class tsd-parent-kind-namespace">
 						<a href="_src_index_.board2d.posmutable.html" class="tsd-kind-icon">Pos<wbr>Mutable</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter tsd-is-not-exported">
+						<a href="../interfaces/_src_index_.board2d.boardreadable.html" class="tsd-kind-icon">Board<wbr>Readable</a>
+					</li>
 					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
-						<a href="../interfaces/_src_index_.board2d.pos.html" class="tsd-kind-icon">Pos</a>
+						<a href="../interfaces/_src_index_.board2d.posreadable.html" class="tsd-kind-icon">Pos<wbr>Readable</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
 						<a href="../modules/_src_index_.board2d.html#skipcopy" class="tsd-kind-icon">Skip<wbr>Copy</a>
