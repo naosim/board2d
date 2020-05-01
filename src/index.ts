@@ -1,4 +1,9 @@
+/**
+ * 盤ライブラリ
+ * バージョン: ##version##
+ */
 export module board2d {
+  export const version = '##version##';
   /**
    * @ignore
    */
@@ -145,7 +150,7 @@ export module board2d {
       this.#xSize = xSize;
       this.#ySize = ySize;
 
-      this.#values = new Array(ySize).fill(null).map(v => new Array(xSize).fill(null));
+      this.#values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
       this.#poses = new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x as X, y as Y)));
     }
 

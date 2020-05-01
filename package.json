@@ -1,17 +1,20 @@
 {
   "name": "board2d",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "build": "./node_modules/typescript/bin/tsc",
+    "build": "npm run-script ts-build && npm run-script docs && node version.js",
+    "ts-build": "./node_modules/typescript/bin/tsc",
     "docs": "./node_modules/typedoc/bin/typedoc"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "replace-in-file": "^6.0.0",
     "typedoc": "^0.17.3",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "version": "^0.1.2"
   }
 }

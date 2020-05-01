@@ -1,4 +1,9 @@
+/**
+ * 盤ライブラリ
+ * バージョン: 2.0.2
+ */
 export declare module board2d {
+    export const version = "2.0.2";
     /**
      * @ignore
      */

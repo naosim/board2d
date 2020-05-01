@@ -13,9 +13,14 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return privateMap.get(receiver);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * 盤ライブラリ
+ * バージョン: 2.0.2
+ */
 var board2d;
 (function (board2d) {
     var _xSize, _ySize, _values, _poses;
+    board2d.version = '2.0.2';
     /**
      * 位置(不変)
      */
@@ -135,7 +140,7 @@ var board2d;
             _poses.set(this, void 0);
             __classPrivateFieldSet(this, _xSize, xSize);
             __classPrivateFieldSet(this, _ySize, ySize);
-            __classPrivateFieldSet(this, _values, new Array(ySize).fill(null).map(v => new Array(xSize).fill(null)));
+            __classPrivateFieldSet(this, _values, new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null)));
             __classPrivateFieldSet(this, _poses, new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x, y))));
         }
         /**
