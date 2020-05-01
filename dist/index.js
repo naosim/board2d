@@ -15,12 +15,12 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * 盤ライブラリ
- * バージョン: 2.0.2
+ * バージョン: 3.0.0
  */
 var board2d;
 (function (board2d) {
-    var _xSize, _ySize, _values, _poses;
-    board2d.version = '2.0.2';
+    var _poses, _boardCore;
+    board2d.version = '3.0.0';
     /**
      * 位置(不変)
      */
@@ -116,14 +116,7 @@ var board2d;
         }
     }
     board2d.PosMutable = PosMutable;
-    /**
-     * 盤
-     *
-     * 2次元配列のラッパークラス
-     * 空のセルにはnullが入っている
-     *
-     */
-    class Board {
+    class BoardCore {
         /**
          * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
          * ```javascript
@@ -134,61 +127,20 @@ var board2d;
          * @param ySize
          */
         constructor(xSize, ySize) {
-            _xSize.set(this, void 0);
-            _ySize.set(this, void 0);
-            _values.set(this, void 0); // T or null
+            this.xSize = xSize;
+            this.ySize = ySize;
             _poses.set(this, void 0);
-            __classPrivateFieldSet(this, _xSize, xSize);
-            __classPrivateFieldSet(this, _ySize, ySize);
-            __classPrivateFieldSet(this, _values, new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null)));
+            this.values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
             __classPrivateFieldSet(this, _poses, new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x, y))));
-        }
-        /**
-         * 盤のxサイズ
-         */
-        get xSize() { return __classPrivateFieldGet(this, _xSize); }
-        /**
-         * 盤のyサイズ
-         */
-        get ySize() { return __classPrivateFieldGet(this, _ySize); }
-        get values() { return __classPrivateFieldGet(this, _values); }
-        /**
-         * 盤を更新する
-         *
-         * @param pos
-         * @param value
-         */
-        putMutable(pos, value) {
-            __classPrivateFieldGet(this, _values)[pos.y][pos.x] = value;
-            return this;
-        }
-        /**
-         * 盤に駒を置く (イミュータブル)
-         * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
-         * ```javascript
-         * var board = new board2d.Board<string>(3, 3);
-         * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
-         * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
-         * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
-         * ```
-         *
-         * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
-         * @param pos
-         * @param value
-         */
-        put(pos, value) {
-            var result = Board.create(this);
-            __classPrivateFieldGet(result, _values)[pos.y][pos.x] = value;
-            return result;
         }
         /**
          * callback関数を、盤上の各セルに対して一度ずつ実行する
          * @param callback
          */
         forEach(callback) {
-            for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
-                for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    callback(__classPrivateFieldGet(this, _poses)[y][x], __classPrivateFieldGet(this, _values)[y][x]);
+            for (var y = 0; y < this.ySize; y++) {
+                for (var x = 0; x < this.xSize; x++) {
+                    callback(__classPrivateFieldGet(this, _poses)[y][x], this.values[y][x]);
                 }
             }
         }
@@ -221,10 +173,10 @@ var board2d;
             if (x < 0 || y < 0) {
                 return undefined;
             }
-            if (__classPrivateFieldGet(this, _values).length <= y || __classPrivateFieldGet(this, _values)[0].length <= x) {
+            if (this.values.length <= y || this.values[0].length <= x) {
                 return undefined;
             }
-            return __classPrivateFieldGet(this, _values)[y][x];
+            return this.values[y][x];
         }
         /**
          * 指定した位置に駒があるかどうかを取得する
@@ -236,15 +188,10 @@ var board2d;
         exists(pos) {
             return this.getValue(pos) !== null && this.getValue(pos) !== undefined;
         }
-        copy() {
-            var result = new Board(__classPrivateFieldGet(this, _xSize), __classPrivateFieldGet(this, _ySize));
-            this.forEach((pos, v) => result.putMutable(pos, v));
-            return result;
-        }
         some(check) {
-            for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
-                for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    if (check(__classPrivateFieldGet(this, _poses)[y][x], __classPrivateFieldGet(this, _values)[y][x])) {
+            for (var y = 0; y < this.ySize; y++) {
+                for (var x = 0; x < this.xSize; x++) {
+                    if (check(__classPrivateFieldGet(this, _poses)[y][x], this.values[y][x])) {
                         return true; // 1つでも見つかったら即返す
                     }
                 }
@@ -252,12 +199,12 @@ var board2d;
             return false;
         }
         find(check) {
-            for (var y = 0; y < __classPrivateFieldGet(this, _ySize); y++) {
-                for (var x = 0; x < __classPrivateFieldGet(this, _xSize); x++) {
-                    if (check(__classPrivateFieldGet(this, _poses)[y][x], __classPrivateFieldGet(this, _values)[y][x])) {
+            for (var y = 0; y < this.ySize; y++) {
+                for (var x = 0; x < this.xSize; x++) {
+                    if (check(__classPrivateFieldGet(this, _poses)[y][x], this.values[y][x])) {
                         return {
                             pos: __classPrivateFieldGet(this, _poses)[y][x],
-                            value: __classPrivateFieldGet(this, _values)[y][x]
+                            value: this.values[y][x]
                         }; // 1つでも見つかったら即返す
                     }
                 }
@@ -280,18 +227,161 @@ var board2d;
                 value: v
             };
         }
-        /**
-         * イミュータブルに盤を作成する
-         * @param board
-         */
-        static create(board) {
-            var result = new Board(__classPrivateFieldGet(board, _xSize), __classPrivateFieldGet(board, _ySize));
-            board.forEach((pos, v) => result.putMutable(pos, v));
+        copy() {
+            var result = new BoardCore(this.xSize, this.ySize);
+            this.forEach((pos, v) => result.values[pos.y][pos.x] = v);
             return result;
         }
     }
-    _xSize = new WeakMap(), _ySize = new WeakMap(), _values = new WeakMap(), _poses = new WeakMap();
+    _poses = new WeakMap();
+    /**
+     * 盤
+     *
+     * 2次元配列のラッパークラス
+     * 空のセルにはnullが入っている
+     *
+     */
+    class Board {
+        /**
+         * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
+         * ```javascript
+         * var board = new board2d.Board<string>(3, 3);
+         * ```
+         *
+         * @param xSize
+         * @param ySize
+         */
+        constructor(boardCore, skipCopy = false) {
+            _boardCore.set(this, void 0);
+            __classPrivateFieldSet(this, _boardCore, skipCopy ? boardCore : boardCore.copy());
+        }
+        /**
+         * 盤のxサイズ
+         */
+        get xSize() { return __classPrivateFieldGet(this, _boardCore).xSize; }
+        /**
+         * 盤のyサイズ
+         */
+        get ySize() { return __classPrivateFieldGet(this, _boardCore).ySize; }
+        get values() { return __classPrivateFieldGet(this, _boardCore).values; }
+        /**
+         * 盤に駒を置く (イミュータブル)
+         * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
+         * ```javascript
+         * var board = new board2d.Board<string>(3, 3);
+         * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
+         * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
+         * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
+         * ```
+         *
+         * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
+         * @param pos
+         * @param value
+         */
+        put(pos, value) {
+            var newBoardCore = __classPrivateFieldGet(this, _boardCore).copy();
+            newBoardCore.values[pos.y][pos.x] = value;
+            return new Board(newBoardCore, true);
+        }
+        /**
+         * callback関数を、盤上の各セルに対して一度ずつ実行する
+         * @param callback
+         */
+        forEach(callback) {
+            __classPrivateFieldGet(this, _boardCore).forEach(callback);
+        }
+        /**
+         * 指定した位置にある駒を取得する
+         *
+         * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+         * ```javascript
+         * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
+         * var a = board.getValue(new board2d.Pos(1, 1)); // x
+         * var b = board.getValue(new board2d.Pos(0, 0)); // null
+         * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
+         * ```
+         *
+         * @param pos
+         * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+         */
+        getValue(pos) {
+            return __classPrivateFieldGet(this, _boardCore).getValue(pos);
+        }
+        /**
+         * 指定した位置にある駒を取得する
+         *
+         * 引数がx, yであること以外は、`getValue()`と同じ。
+         * @param x
+         * @param y
+         * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
+         */
+        getValueFromXY(x, y) {
+            return __classPrivateFieldGet(this, _boardCore).getValueFromXY(x, y);
+        }
+        /**
+         * 指定した位置に駒があるかどうかを取得する
+         *
+         * 駒がある場合はtrueを返す。
+         * 駒がない、または、位置が盤の外側の場合、falseを返す。
+         * @param pos
+         */
+        exists(pos) {
+            return __classPrivateFieldGet(this, _boardCore).exists(pos);
+        }
+        copy() {
+            return new Board(__classPrivateFieldGet(this, _boardCore).copy());
+        }
+        some(check) {
+            return __classPrivateFieldGet(this, _boardCore).some(check);
+        }
+        find(check) {
+            return __classPrivateFieldGet(this, _boardCore).find(check);
+        }
+        /**
+         * posからdirectionの方向に1歩進んだ場所を取得する
+         * @param pos
+         * @param direction
+         */
+        getFromDrection(pos, direction) {
+            return __classPrivateFieldGet(this, _boardCore).getFromDrection(pos, direction);
+        }
+        // /**
+        //  * イミュータブルに盤を作成する
+        //  * @param board
+        //  */
+        // static createFromBoard<T>(board: Board<T>): Board<T> {
+        //   var boardCore = new BoardCore<T>(board.xSize, board.ySize);
+        //   board.forEach((pos, v) => result.putMutable(pos, v));
+        //   return result;
+        // }
+        static empty(xSize, ySize) {
+            return new Board(new BoardCore(xSize, ySize), true);
+        }
+    }
+    _boardCore = new WeakMap();
     board2d.Board = Board;
+    class BoardMutable {
+        constructor(boardCore, skipCopy = false) {
+            this.boardCore = skipCopy ? boardCore : boardCore.copy();
+        }
+        /**
+         * 盤を更新する
+         *
+         * @param pos
+         * @param value
+         */
+        put(pos, value) {
+            this.boardCore.values[pos.y][pos.x] = value;
+            return this;
+        }
+        static empty(xSize, ySize) {
+            return new BoardMutable(new BoardCore(xSize, ySize), true);
+        }
+        toImmutable() {
+            return new Board(this.boardCore);
+        }
+    }
+    board2d.BoardMutable = BoardMutable;
     /**
      * 方向
      */

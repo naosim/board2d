@@ -25,6 +25,16 @@ export module board2d {
   export type Y = number & { [YNominality]: never }
 
   /**
+   * @ignore
+   */
+  declare const SkipCopyNominality: unique symbol
+  /**
+   * コピーを省略する
+   * boolean型の拡張
+   */
+  export type SkipCopy = boolean & { [SkipCopyNominality]: never }
+
+  /**
    * 位置
    */
   export interface Pos {
@@ -124,18 +134,9 @@ export module board2d {
     
   }
 
-  /**
-   * 盤
-   *
-   * 2次元配列のラッパークラス
-   * 空のセルにはnullが入っている
-   *
-   */
-  export class Board<T> {
-    #xSize: number;
-    #ySize: number;
-    #values: (T | null)[][]; // T or null
-    #poses: PosImmutable[][];
+  class BoardCore<T> {
+    readonly values: (T | null)[][]; // T or null
+    readonly #poses: PosImmutable[][];
 
     /**
      * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
@@ -146,53 +147,9 @@ export module board2d {
      * @param xSize
      * @param ySize
      */
-    constructor(xSize:number, ySize: number) {
-      this.#xSize = xSize;
-      this.#ySize = ySize;
-
-      this.#values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
+    constructor(readonly xSize:number, readonly ySize: number) {
+      this.values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
       this.#poses = new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new PosImmutable(x as X, y as Y)));
-    }
-
-    /**
-     * 盤のxサイズ
-     */
-    get xSize(): number { return this.#xSize; }
-    /**
-     * 盤のyサイズ
-     */
-    get ySize(): number { return this.#ySize; }
-    get values(): (T | null)[][] { return this.#values; }
-
-    /**
-     * 盤を更新する
-     * 
-     * @param pos
-     * @param value
-     */
-    putMutable(pos: Pos, value: T | null): Board<T> {
-      this.#values[pos.y][pos.x] = value;
-      return this;
-    }
-
-    /**
-     * 盤に駒を置く (イミュータブル)
-     * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
-     * ```javascript
-     * var board = new board2d.Board<string>(3, 3);
-     * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
-     * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
-     * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
-     * ```
-     *
-     * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
-     * @param pos
-     * @param value
-     */
-    put(pos: Pos, value: T | null): Board<T> {
-      var result = Board.create(this);
-      result.#values[pos.y][pos.x] = value;
-      return result;
     }
 
     /**
@@ -200,9 +157,9 @@ export module board2d {
      * @param callback
      */
     forEach(callback: (pos: PosImmutable, value: T | null)=>void) {
-      for(var y = 0 as Y; y < this.#ySize; y++) {
-        for(var x = 0 as X; x < this.#xSize; x++) {
-          callback(this.#poses[y][x], this.#values[y][x])
+      for(var y = 0 as Y; y < this.ySize; y++) {
+        for(var x = 0 as X; x < this.xSize; x++) {
+          callback(this.#poses[y][x], this.values[y][x])
         }
       }
     }
@@ -237,10 +194,10 @@ export module board2d {
       if(x < 0 || y < 0) {
         return undefined;
       }
-      if(this.#values.length <= y || this.#values[0].length <= x) {
+      if(this.values.length <= y || this.values[0].length <= x) {
         return undefined;
       }
-      return this.#values[y][x];
+      return this.values[y][x];
     }
 
     /**
@@ -254,16 +211,10 @@ export module board2d {
       return this.getValue(pos) !== null && this.getValue(pos) !== undefined;
     }
 
-    copy(): Board<T> {
-      var result = new Board<T>(this.#xSize, this.#ySize);
-      this.forEach((pos, v) => result.putMutable(pos, v));
-      return result;
-    }
-
     some(check: (pos: PosImmutable, value: T | null)=>boolean): boolean {
-      for(var y: Y = 0 as Y; y < this.#ySize; y++) {
-        for(var x: X = 0 as X; x < this.#xSize; x++) {
-          if(check(this.#poses[y][x], this.#values[y][x])) {
+      for(var y: Y = 0 as Y; y < this.ySize; y++) {
+        for(var x: X = 0 as X; x < this.xSize; x++) {
+          if(check(this.#poses[y][x], this.values[y][x])) {
             return true;// 1つでも見つかったら即返す
           }
         }
@@ -272,12 +223,12 @@ export module board2d {
     }
 
     find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
-      for(var y = 0 as Y; y < this.#ySize; y++) {
-        for(var x = 0 as X; x < this.#xSize; x++) {
-          if(check(this.#poses[y][x], this.#values[y][x])) {
+      for(var y = 0 as Y; y < this.ySize; y++) {
+        for(var x = 0 as X; x < this.xSize; x++) {
+          if(check(this.#poses[y][x], this.values[y][x])) {
             return {
               pos: this.#poses[y][x],
-              value: this.#values[y][x]
+              value: this.values[y][x]
             };// 1つでも見つかったら即返す
           }
         }
@@ -302,14 +253,175 @@ export module board2d {
       };
     }
 
-    /**
-     * イミュータブルに盤を作成する
-     * @param board
-     */
-    static create<T>(board: Board<T>): Board<T> {
-      var result = new Board<T>(board.#xSize, board.#ySize);
-      board.forEach((pos, v) => result.putMutable(pos, v));
+    copy(): BoardCore<T> {
+      var result = new BoardCore<T>(this.xSize, this.ySize);
+      this.forEach((pos, v) => result.values[pos.y][pos.x] = v);
       return result;
+    }
+  }
+
+  /**
+   * 盤
+   *
+   * 2次元配列のラッパークラス
+   * 空のセルにはnullが入っている
+   *
+   */
+  export class Board<T> {
+    #boardCore: BoardCore<T>;
+
+    /**
+     * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
+     * ```javascript
+     * var board = new board2d.Board<string>(3, 3);
+     * ```
+     *
+     * @param xSize
+     * @param ySize
+     */
+    constructor(boardCore: BoardCore<T>, skipCopy: SkipCopy = false as SkipCopy) {
+      this.#boardCore = skipCopy ? boardCore : boardCore.copy();
+    }
+
+    /**
+     * 盤のxサイズ
+     */
+    get xSize(): number { return this.#boardCore.xSize; }
+    /**
+     * 盤のyサイズ
+     */
+    get ySize(): number { return this.#boardCore.ySize; }
+    get values(): (T | null)[][] { return this.#boardCore.values; }
+
+    
+
+    /**
+     * 盤に駒を置く (イミュータブル)
+     * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
+     * ```javascript
+     * var board = new board2d.Board<string>(3, 3);
+     * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
+     * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
+     * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
+     * ```
+     *
+     * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
+     * @param pos
+     * @param value
+     */
+    put(pos: Pos, value: T | null): Board<T> {
+      var newBoardCore = this.#boardCore.copy();
+      newBoardCore.values[pos.y][pos.x] = value;
+      return new Board<T>(newBoardCore, true as SkipCopy);
+    }
+
+    /**
+     * callback関数を、盤上の各セルに対して一度ずつ実行する
+     * @param callback
+     */
+    forEach(callback: (pos: PosImmutable, value: T | null)=>void) {
+      this.#boardCore.forEach(callback);
+    }
+
+    /**
+     * 指定した位置にある駒を取得する
+     *
+     * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+     * ```javascript
+     * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
+     * var a = board.getValue(new board2d.Pos(1, 1)); // x
+     * var b = board.getValue(new board2d.Pos(0, 0)); // null
+     * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
+     * ```
+     *
+     * @param pos
+     * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+     */
+    getValue(pos: Pos): T | null | undefined {
+      return this.#boardCore.getValue(pos);
+    }
+
+    /**
+     * 指定した位置にある駒を取得する
+     *
+     * 引数がx, yであること以外は、`getValue()`と同じ。
+     * @param x
+     * @param y
+     * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
+     */
+    getValueFromXY(x: X, y: Y): T | null | undefined {
+      return this.#boardCore.getValueFromXY(x, y);
+    }
+
+    /**
+     * 指定した位置に駒があるかどうかを取得する
+     *
+     * 駒がある場合はtrueを返す。
+     * 駒がない、または、位置が盤の外側の場合、falseを返す。
+     * @param pos
+     */
+    exists(pos: Pos): boolean {
+      return this.#boardCore.exists(pos);
+    }
+
+    copy(): Board<T> {
+      return new Board<T>(this.#boardCore.copy());
+    }
+
+    some(check: (pos: PosImmutable, value: T | null)=>boolean): boolean {
+      return this.#boardCore.some(check);
+    }
+
+    find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
+      return this.#boardCore.find(check);
+    }
+
+    /**
+     * posからdirectionの方向に1歩進んだ場所を取得する
+     * @param pos
+     * @param direction
+     */
+    getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined {
+      return this.#boardCore.getFromDrection(pos, direction);
+    }
+
+    // /**
+    //  * イミュータブルに盤を作成する
+    //  * @param board
+    //  */
+    // static createFromBoard<T>(board: Board<T>): Board<T> {
+    //   var boardCore = new BoardCore<T>(board.xSize, board.ySize);
+    //   board.forEach((pos, v) => result.putMutable(pos, v));
+    //   return result;
+    // }
+
+    static empty<T>(xSize: number, ySize: number): Board<T> {
+      return new Board<T>(new BoardCore(xSize, ySize), true as SkipCopy)
+    }
+  }
+
+  export class BoardMutable<T> {
+    boardCore: BoardCore<T>;
+    constructor(boardCore: BoardCore<T>, skipCopy: SkipCopy = false as SkipCopy) {
+      this.boardCore = skipCopy ? boardCore : boardCore.copy();
+    }
+    /**
+     * 盤を更新する
+     * 
+     * @param pos
+     * @param value
+     */
+    put(pos: Pos, value: T | null): BoardMutable<T> {
+      this.boardCore.values[pos.y][pos.x] = value;
+      return this;
+    }
+
+    static empty<T>(xSize: number, ySize: number): BoardMutable<T> {
+      return new BoardMutable<T>(new BoardCore(xSize, ySize), true as SkipCopy)
+    }
+
+    toImmutable(): Board<T> {
+      return new Board<T>(this.boardCore);
     }
   }
 
