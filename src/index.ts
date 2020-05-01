@@ -385,15 +385,9 @@ export module board2d {
       return this.#boardCore.getFromDrection(pos, direction);
     }
 
-    // /**
-    //  * イミュータブルに盤を作成する
-    //  * @param board
-    //  */
-    // static createFromBoard<T>(board: Board<T>): Board<T> {
-    //   var boardCore = new BoardCore<T>(board.xSize, board.ySize);
-    //   board.forEach((pos, v) => result.putMutable(pos, v));
-    //   return result;
-    // }
+    toMutable(): BoardMutable<T> {
+      return new BoardMutable<T>(this.#boardCore);
+    }
 
     static empty<T>(xSize: number, ySize: number): Board<T> {
       return new Board<T>(new BoardCore(xSize, ySize), true as SkipCopy)

@@ -1,9 +1,9 @@
 /**
  * 盤ライブラリ
- * バージョン: 3.0.0
+ * バージョン: 3.1.0
  */
 export declare module board2d {
-    export const version = "3.0.0";
+    export const version = "3.1.0";
     /**
      * @ignore
      */
@@ -240,6 +240,7 @@ export declare module board2d {
          * @param direction
          */
         getFromDrection(pos: Pos, direction: Direction): ValueAndPos<T | null> | undefined;
+        toMutable(): BoardMutable<T>;
         static empty<T>(xSize: number, ySize: number): Board<T>;
     }
     export class BoardMutable<T> {

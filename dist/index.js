@@ -15,12 +15,12 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * 盤ライブラリ
- * バージョン: 3.0.0
+ * バージョン: 3.1.0
  */
 var board2d;
 (function (board2d) {
     var _poses, _boardCore;
-    board2d.version = '3.0.0';
+    board2d.version = '3.1.0';
     /**
      * 位置(不変)
      */
@@ -345,15 +345,9 @@ var board2d;
         getFromDrection(pos, direction) {
             return __classPrivateFieldGet(this, _boardCore).getFromDrection(pos, direction);
         }
-        // /**
-        //  * イミュータブルに盤を作成する
-        //  * @param board
-        //  */
-        // static createFromBoard<T>(board: Board<T>): Board<T> {
-        //   var boardCore = new BoardCore<T>(board.xSize, board.ySize);
-        //   board.forEach((pos, v) => result.putMutable(pos, v));
-        //   return result;
-        // }
+        toMutable() {
+            return new BoardMutable(__classPrivateFieldGet(this, _boardCore));
+        }
         static empty(xSize, ySize) {
             return new Board(new BoardCore(xSize, ySize), true);
         }
