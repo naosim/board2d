@@ -133,10 +133,6 @@ var board2d;
             this.values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
             __classPrivateFieldSet(this, _poses, new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new Pos(x, y))));
         }
-        /**
-         * callback関数を、盤上の各セルに対して一度ずつ実行する
-         * @param callback
-         */
         forEach(callback) {
             for (var y = 0; y < this.ySize; y++) {
                 for (var x = 0; x < this.xSize; x++) {
@@ -144,31 +140,9 @@ var board2d;
                 }
             }
         }
-        /**
-         * 指定した位置にある駒を取得する
-         *
-         * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-         * ```javascript
-         * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
-         * var a = board.getValue(new board2d.Pos(1, 1)); // x
-         * var b = board.getValue(new board2d.Pos(0, 0)); // null
-         * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
-         * ```
-         *
-         * @param pos
-         * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-         */
         getValue(pos) {
             return this.getValueFromXY(pos.x, pos.y);
         }
-        /**
-         * 指定した位置にある駒を取得する
-         *
-         * 引数がx, yであること以外は、`getValue()`と同じ。
-         * @param x
-         * @param y
-         * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
-         */
         getValueFromXY(x, y) {
             if (x < 0 || y < 0) {
                 return undefined;
@@ -178,13 +152,6 @@ var board2d;
             }
             return this.values[y][x];
         }
-        /**
-         * 指定した位置に駒があるかどうかを取得する
-         *
-         * 駒がある場合はtrueを返す。
-         * 駒がない、または、位置が盤の外側の場合、falseを返す。
-         * @param pos
-         */
         exists(pos) {
             return this.getValue(pos) !== null && this.getValue(pos) !== undefined;
         }
@@ -211,11 +178,6 @@ var board2d;
             }
             return null;
         }
-        /**
-         * posからdirectionの方向に1歩進んだ場所を取得する
-         * @param pos
-         * @param direction
-         */
         getFromDrection(pos, direction) {
             var p = Pos.createFromPos(pos).addDirection(direction);
             var v = this.getValue(p);

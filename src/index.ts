@@ -207,10 +207,6 @@ export module board2d {
       this.#poses = new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new Pos(x as X, y as Y)));
     }
 
-    /**
-     * callback関数を、盤上の各セルに対して一度ずつ実行する
-     * @param callback
-     */
     forEach(callback: (pos: Pos, value: T | null)=>void) {
       for(var y = 0 as Y; y < this.ySize; y++) {
         for(var x = 0 as X; x < this.xSize; x++) {
@@ -219,32 +215,10 @@ export module board2d {
       }
     }
 
-    /**
-     * 指定した位置にある駒を取得する
-     *
-     * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-     * ```javascript
-     * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
-     * var a = board.getValue(new board2d.Pos(1, 1)); // x
-     * var b = board.getValue(new board2d.Pos(0, 0)); // null
-     * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
-     * ```
-     *
-     * @param pos
-     * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-     */
     getValue(pos: PosReadable): T | null | undefined {
       return this.getValueFromXY(pos.x, pos.y);
     }
 
-    /**
-     * 指定した位置にある駒を取得する
-     *
-     * 引数がx, yであること以外は、`getValue()`と同じ。
-     * @param x
-     * @param y
-     * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
-     */
     getValueFromXY(x: X, y: Y): T | null | undefined {
       if(x < 0 || y < 0) {
         return undefined;
@@ -255,13 +229,6 @@ export module board2d {
       return this.values[y][x];
     }
 
-    /**
-     * 指定した位置に駒があるかどうかを取得する
-     *
-     * 駒がある場合はtrueを返す。
-     * 駒がない、または、位置が盤の外側の場合、falseを返す。
-     * @param pos
-     */
     exists(pos: PosReadable): boolean {
       return this.getValue(pos) !== null && this.getValue(pos) !== undefined;
     }
@@ -291,11 +258,7 @@ export module board2d {
       return null;
     }
 
-    /**
-     * posからdirectionの方向に1歩進んだ場所を取得する
-     * @param pos
-     * @param direction
-     */
+
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
       var p = Pos.createFromPos(pos).addDirection(direction);
       var v = this.getValue(p);

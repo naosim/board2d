@@ -153,50 +153,12 @@ export declare module board2d {
          * @param ySize
          */
         constructor(xSize: number, ySize: number);
-        /**
-         * callback関数を、盤上の各セルに対して一度ずつ実行する
-         * @param callback
-         */
         forEach(callback: (pos: Pos, value: T | null) => void): void;
-        /**
-         * 指定した位置にある駒を取得する
-         *
-         * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-         * ```javascript
-         * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
-         * var a = board.getValue(new board2d.Pos(1, 1)); // x
-         * var b = board.getValue(new board2d.Pos(0, 0)); // null
-         * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
-         * ```
-         *
-         * @param pos
-         * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-         */
         getValue(pos: PosReadable): T | null | undefined;
-        /**
-         * 指定した位置にある駒を取得する
-         *
-         * 引数がx, yであること以外は、`getValue()`と同じ。
-         * @param x
-         * @param y
-         * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
-         */
         getValueFromXY(x: X, y: Y): T | null | undefined;
-        /**
-         * 指定した位置に駒があるかどうかを取得する
-         *
-         * 駒がある場合はtrueを返す。
-         * 駒がない、または、位置が盤の外側の場合、falseを返す。
-         * @param pos
-         */
         exists(pos: PosReadable): boolean;
         some(check: (pos: Pos, value: T | null) => boolean): boolean;
         find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
-        /**
-         * posからdirectionの方向に1歩進んだ場所を取得する
-         * @param pos
-         * @param direction
-         */
         getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
         copy(): BoardCore<T>;
     }
