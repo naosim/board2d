@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* 基本オプション */
     "target": "es6",                          /* ECMAScriptのターゲットバージョンを指定します: 'ES3'（デフォルト）, 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018'または 'ESNEXT' */
-    "module": "none",                     /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。 */
+    "module": "umd",                     /* モジュールコード生成: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015',または 'ESNext'を指定します。 */
     // "lib": [],                             /* コンパイルに含めるライブラリファイルを指定します。 */
     // "allowJs": true,                       /* javascriptファイルをコンパイルできるようにします。 */
     // "checkJs": true,                       /* .jsファイルのエラーを報告します。 */
@@ -10,7 +10,7 @@
     "declaration": true,                   /* 対応する '.d.ts'ファイルを生成します。 */
     // "declarationMap": true,                /* 対応する '.d.ts'ファイルごとにソースマップを生成します。 */
     // "sourceMap": true,                     /* 対応する '.map'ファイルを生成します。 */
-    // "outFile": "./",                       /* 1つのファイルに連結して出力​​します。 */
+    // "outFile": "./dist/index.js",                       /* 1つのファイルに連結して出力​​します。 */
     "outDir": "./dist",                        /* 出力構造をディレクトリにリダイレクトします。 */
     "rootDir": "./src",                       /* 入力ファイルのルートディレクトリを指定します。 --outDirを使用して出力ディレクトリ構造を制御するために使用します。 */
     // "composite": true,                     /* プロジェクトのコンパイルを有効にする*/
