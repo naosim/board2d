@@ -169,7 +169,7 @@ export class BoardCore<T> implements BoardReadable<T> {
  *
  */
 export class Board<T> implements BoardReadable<T> {
-  #boardCore: BoardCore<T>;
+  readonly #boardCore: BoardCore<T>;
 
   constructor(boardCore: BoardCore<T>, skipCopy: SkipCopy = false as SkipCopy) {
     this.#boardCore = skipCopy ? boardCore : boardCore.copy();
