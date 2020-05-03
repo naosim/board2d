@@ -11,19 +11,10 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     }
     return privateMap.get(receiver);
 };
-(function (factory) {
-    if (typeof module === "object" && typeof module.exports === "object") {
-        var v = factory(require, exports);
-        if (v !== undefined) module.exports = v;
-    }
-    else if (typeof define === "function" && define.amd) {
-        define(["require", "exports", "../pos/pos"], factory);
-    }
-})(function (require, exports) {
+define(["require", "exports", "../pos/pos"], function (require, exports, pos_1) {
     "use strict";
     var _poses, _boardCore;
     Object.defineProperty(exports, "__esModule", { value: true });
-    const pos_1 = require("../pos/pos");
     class BoardCore {
         /**
          * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
