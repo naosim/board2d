@@ -15,7 +15,8 @@ import * as board2d from 'board2d';
 ```
 
 ## usage
-### 3x3の盤を作り、駒を置く
+### 盤面の更新
+#### 3x3の盤を作り、駒を置く
 ```javascript
 var board = board2d.Board.empty(3, 3) // 3x3の盤面を生成
   .put(new board2d.Pos(2, 2), 'x') // 駒を置く
