@@ -46,9 +46,9 @@ board.forEach((pos, value) => {
 #### 指定位置から任意の方向(隣)にある駒を取得する
 ```javascript
 var mark;
-mark = board.getFromDrection({x: 2, y: 2}, board2d.Direction.up)// {x: 2, y: 1}の駒を取得する => 'o'
-mark = board.getFromDrection({x: 2, y: 2}, board2d.Direction.left)// {x: 1, y: 2}の駒を取得する => null
-mark = board.getFromDrection({x: 2, y: 2}, board2d.Direction.right)// {x: 3, y: 2}の駒を取得する => undefined :盤面外
+posAndValue = board.getFromDrection({x: 2, y: 2}, board2d.Direction.up)// {x: 2, y: 1}の駒を取得する => {pos: {x: 2, y: 1}, value: 'o'}
+posAndValue = board.getFromDrection({x: 2, y: 2}, board2d.Direction.left)// {x: 1, y: 2}の駒を取得する => {pos: {x: 1, y: 2}, value: null}
+posAndValue = board.getFromDrection({x: 2, y: 2}, board2d.Direction.right)// {x: 3, y: 2}の駒を取得する => undefined
 ```
 
 #### 任意の条件で駒を探す

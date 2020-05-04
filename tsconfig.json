@@ -33,7 +33,7 @@
     // "noImplicitReturns": true,             /* 関数内のすべてのコードパスが値を返さない場合,エラーを報告します。 */
     // "noFallthroughCasesInSwitch": true,    /* switchステートメントのfallthrough caseのエラーを報告します。 */
     /* モジュール解決オプション*/
-    // "moduleResolution": "node",            /* モジュール解決戦略を指定する: 'node'（Node.js）または 'classic'（TypeScript pre-1.6）。 */
+    "moduleResolution": "node",            /* モジュール解決戦略を指定する: 'node'（Node.js）または 'classic'（TypeScript pre-1.6）。 */ // babelで怒られるため
     // "baseUrl": "./",                       /* 非絶対モジュール名を解決するためのベースディレクトリ。 */
     // "paths": {},                           /* 'baseUrl'に相対的な参照位置にインポートを再マップする一連のエントリ。 */
     // "rootDirs": [],                        /* 結合コンテンツが実行時にプロジェクトの構造を表すルートフォルダのリスト。 */

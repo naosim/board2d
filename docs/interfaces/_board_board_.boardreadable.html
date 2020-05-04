@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>BoardReadable | board2d</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for board2d">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -109,6 +109,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_board_board_.boardreadable.html#exists" class="tsd-kind-icon">exists</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_board_board_.boardreadable.html#find" class="tsd-kind-icon">find</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_board_board_.boardreadable.html#findall" class="tsd-kind-icon">find<wbr>All</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_board_board_.boardreadable.html#foreach" class="tsd-kind-icon">for<wbr>Each</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_board_board_.boardreadable.html#getfromdrection" class="tsd-kind-icon">get<wbr>From<wbr>Drection</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_board_board_.boardreadable.html#getvalue" class="tsd-kind-icon">get<wbr>Value</a></li>
@@ -123,21 +124,21 @@
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="xsize" class="tsd-anchor"></a>
-					<h3>x<wbr>Size</h3>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> x<wbr>Size</h3>
 					<div class="tsd-signature tsd-kind-icon">x<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L20">board/board.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L20">board/board.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="ysize" class="tsd-anchor"></a>
-					<h3>y<wbr>Size</h3>
+					<h3><span class="tsd-flag ts-flagReadonly">Readonly</span> y<wbr>Size</h3>
 					<div class="tsd-signature tsd-kind-icon">y<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L21">board/board.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L21">board/board.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -154,7 +155,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L61">board/board.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L61">board/board.ts:61</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,7 +187,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L65">board/board.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L65">board/board.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -221,6 +222,50 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="findall" class="tsd-anchor"></a>
+					<h3>find<wbr>All</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">find<wbr>All<span class="tsd-signature-symbol">(</span>check<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_pos_pos_.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/_board_board_.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L66">board/board.ts:66</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>check: <span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_pos_pos_.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter-signature">
+											<ul class="tsd-signatures tsd-kind-type-literal">
+												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>pos<span class="tsd-signature-symbol">: </span><a href="../classes/_pos_pos_.pos.html" class="tsd-signature-type">Pos</a>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+											</ul>
+											<ul class="tsd-descriptions">
+												<li class="tsd-description">
+													<h4 class="tsd-parameters-title">Parameters</h4>
+													<ul class="tsd-parameters">
+														<li>
+															<h5>pos: <a href="../classes/_pos_pos_.pos.html" class="tsd-signature-type">Pos</a></h5>
+														</li>
+														<li>
+															<h5>value: <span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span></h5>
+														</li>
+													</ul>
+													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/_board_board_.html#valueandpos" class="tsd-signature-type">ValueAndPos</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
 					<a name="foreach" class="tsd-anchor"></a>
 					<h3>for<wbr>Each</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
@@ -230,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L26">board/board.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L26">board/board.ts:26</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -281,7 +326,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L72">board/board.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L73">board/board.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,7 +359,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L42">board/board.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L42">board/board.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -348,7 +393,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L52">board/board.ts:52</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L52">board/board.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -381,7 +426,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/naosim/board2d/blob/cf4b303/src/board/board.ts#L63">board/board.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/naosim/board2d/blob/d06cbfb/src/board/board.ts#L63">board/board.ts:63</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -461,6 +506,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_board_board_.boardreadable.html#find" class="tsd-kind-icon">find</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_board_board_.boardreadable.html#findall" class="tsd-kind-icon">find<wbr>All</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
 								<a href="_board_board_.boardreadable.html#foreach" class="tsd-kind-icon">for<wbr>Each</a>

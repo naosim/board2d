@@ -52,6 +52,7 @@ export interface BoardReadable<T> {
     exists(pos: PosReadable): boolean;
     some(check: (pos: Pos, value: T | null) => boolean): boolean;
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
+    findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     /**
      * posからdirectionの方向に1歩進んだ場所を取得する
      * @param pos
@@ -125,6 +126,7 @@ export declare class Board<T> implements BoardReadable<T> {
     copy(): Board<T>;
     some(check: (pos: Pos, value: T | null) => boolean): boolean;
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
+    findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
     toMutable(): BoardMutable<T>;
     static empty<T>(xSize: number, ySize: number): Board<T>;
@@ -148,6 +150,7 @@ export declare class BoardMutable<T> implements BoardReadable<T> {
     copy(): Board<T>;
     some(check: (pos: Pos, value: T | null) => boolean): boolean;
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
+    findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
     static empty<T>(xSize: number, ySize: number): BoardMutable<T>;
     toImmutable(): Board<T>;

@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "test": "tsc src/index.ts --outDir test/dist --module commonjs --target es6 && jest",
     "build": "npm run-script ts-build && npm run-script docs && node version.js",
     "ts-build": "./node_modules/typescript/bin/tsc",
     "docs": "./node_modules/typedoc/bin/typedoc"
@@ -12,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^25.5.4",
     "replace-in-file": "^6.0.0",
     "typedoc": "^0.17.3",
     "typescript": "^3.8.3",

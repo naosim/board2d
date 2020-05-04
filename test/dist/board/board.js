@@ -1,3 +1,4 @@
+"use strict";
 var __classPrivateFieldSet = (this && this.__classPrivateFieldSet) || function (receiver, privateMap, value) {
     if (!privateMap.has(receiver)) {
         throw new TypeError("attempted to set private field on non-instance");
@@ -12,8 +13,9 @@ var __classPrivateFieldGet = (this && this.__classPrivateFieldGet) || function (
     return privateMap.get(receiver);
 };
 var _poses, _boardCore;
-import { Pos } from '../pos/pos';
-export class BoardCore {
+Object.defineProperty(exports, "__esModule", { value: true });
+const pos_1 = require("../pos/pos");
+class BoardCore {
     /**
      * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
      * ```javascript
@@ -28,7 +30,7 @@ export class BoardCore {
         this.ySize = ySize;
         _poses.set(this, void 0);
         this.values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
-        __classPrivateFieldSet(this, _poses, new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new Pos(x, y))));
+        __classPrivateFieldSet(this, _poses, new Array(ySize).fill(null).map((_, y) => new Array(xSize).fill(null).map((__, x) => new pos_1.Pos(x, y))));
     }
     forEach(callback) {
         for (var y = 0; y < this.ySize; y++) {
@@ -90,7 +92,7 @@ export class BoardCore {
         return result;
     }
     getFromDrection(pos, direction) {
-        var p = Pos.createFromPos(pos).addDirection(direction);
+        var p = pos_1.Pos.createFromPos(pos).addDirection(direction);
         var v = this.getValue(p);
         if (v === undefined) {
             return undefined;
@@ -106,6 +108,7 @@ export class BoardCore {
         return result;
     }
 }
+exports.BoardCore = BoardCore;
 _poses = new WeakMap();
 /**
  * 盤
@@ -114,7 +117,7 @@ _poses = new WeakMap();
  * 空のセルにはnullが入っている
  *
  */
-export class Board {
+class Board {
     constructor(boardCore, skipCopy = false) {
         _boardCore.set(this, void 0);
         __classPrivateFieldSet(this, _boardCore, skipCopy ? boardCore : boardCore.copy());
@@ -147,7 +150,7 @@ export class Board {
         return new Board(newBoardCore, true);
     }
     putFromXY(x, y, value) {
-        return this.put(new Pos(x, y), value);
+        return this.put(new pos_1.Pos(x, y), value);
     }
     forEach(callback) {
         __classPrivateFieldGet(this, _boardCore).forEach(callback);
@@ -183,8 +186,9 @@ export class Board {
         return new Board(new BoardCore(xSize, ySize), true);
     }
 }
+exports.Board = Board;
 _boardCore = new WeakMap();
-export class BoardMutable {
+class BoardMutable {
     constructor(boardCore, skipCopy = false) {
         this.boardCore = skipCopy ? boardCore : boardCore.copy();
     }
@@ -234,3 +238,4 @@ export class BoardMutable {
         return new Board(this.boardCore);
     }
 }
+exports.BoardMutable = BoardMutable;
