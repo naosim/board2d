@@ -141,6 +141,21 @@ export class BoardCore<T> implements BoardReadable<T> {
     return null;
   }
 
+  findAll(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null>[] {
+    var result = [];
+    for(var y = 0 as Y; y < this.ySize; y++) {
+      for(var x = 0 as X; x < this.xSize; x++) {
+        if(check(this.#poses[y][x], this.values[y][x])) {
+          result.push({
+            pos: this.#poses[y][x],
+            value: this.values[y][x]
+          });
+        }
+      }
+    }
+    return result;
+  }
+
 
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
     var p = Pos.createFromPos(pos).addDirection(direction);
@@ -178,8 +193,12 @@ export class Board<T> implements BoardReadable<T> {
   get xSize(): number { return this.#boardCore.xSize; }
   get ySize(): number { return this.#boardCore.ySize; }
 
-  // これを隠蔽したい
-  //get values(): (T | null)[][] { return this.#boardCore.values; }
+  /**
+   * 盤面の生データ取得
+   * 
+   * コピーを返す。要素を変更しても盤面には影響しない
+   */
+  get values(): (T | null)[][] { return this.#boardCore.copy().values; }
 
   /**
    * 盤に駒を置く (イミュータブル)
@@ -199,6 +218,10 @@ export class Board<T> implements BoardReadable<T> {
     var newBoardCore = this.#boardCore.copy();
     newBoardCore.values[pos.y][pos.x] = value;
     return new Board<T>(newBoardCore, true as SkipCopy);
+  }
+
+  putFromXY(x: X, y: Y, value: T | null) {
+    return this.put(new Pos(x, y), value);
   }
 
   forEach(callback: (pos: Pos, value: T | null)=>void) {

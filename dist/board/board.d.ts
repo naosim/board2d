@@ -80,6 +80,7 @@ export declare class BoardCore<T> implements BoardReadable<T> {
     exists(pos: PosReadable): boolean;
     some(check: (pos: Pos, value: T | null) => boolean): boolean;
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
+    findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
     copy(): BoardCore<T>;
 }
@@ -96,6 +97,12 @@ export declare class Board<T> implements BoardReadable<T> {
     get xSize(): number;
     get ySize(): number;
     /**
+     * 盤面の生データ取得
+     *
+     * コピーを返す。要素を変更しても盤面には影響しない
+     */
+    get values(): (T | null)[][];
+    /**
      * 盤に駒を置く (イミュータブル)
      * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
      * ```javascript
@@ -110,6 +117,7 @@ export declare class Board<T> implements BoardReadable<T> {
      * @param value
      */
     put(pos: PosReadable, value: T | null): Board<T>;
+    putFromXY(x: X, y: Y, value: T | null): Board<T>;
     forEach(callback: (pos: Pos, value: T | null) => void): void;
     getValue(pos: PosReadable): T | null | undefined;
     getValueFromXY(x: X, y: Y): T | null | undefined;

@@ -67,10 +67,89 @@
 				<a href="#board2d" id="board2d" style="color: inherit; text-decoration: none;">
 					<h1>board2d</h1>
 				</a>
-				<p>ゲーム用の盤ライブラリ</p>
+				<p>ゲーム用の盤面ライブラリ。<br>オセロや将棋など格子状の盤面を使ったゲームに使ってください。</p>
+				<a href="#install" id="install" style="color: inherit; text-decoration: none;">
+					<h2>install</h2>
+				</a>
+				<pre><code>npm <span class="hljs-keyword">install</span> board2d</code></pre>
+				<a href="#import" id="import" style="color: inherit; text-decoration: none;">
+					<h2>import</h2>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> board2d <span class="hljs-keyword">from</span> <span class="hljs-string">'board2d'</span>;</code></pre>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>usage</h2>
 				</a>
+				<a href="#3x3の盤を作り、駒を置く" id="3x3の盤を作り、駒を置く" style="color: inherit; text-decoration: none;">
+					<h3>3x3の盤を作り、駒を置く</h3>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> board = board2d.Board.empty(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>) <span class="hljs-comment">// 3x3の盤面を生成</span>
+  .put(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>), <span class="hljs-string">'x'</span>) <span class="hljs-comment">// 駒を置く</span>
+  .put({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">1</span>}, <span class="hljs-string">'o'</span>) <span class="hljs-comment">// 座標は{x:number, y:number}のobjectでも良い</span>
+  .putFromXY(<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-string">'o'</span>) <span class="hljs-comment">// x, yを直接渡すメソッドもある</span>
+<span class="hljs-keyword">var</span> mark = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>)); <span class="hljs-comment">// 指定位置の駒を取得する</span>
+<span class="hljs-built_in">console</span>.log(mark); <span class="hljs-comment">// =&gt; 'x'</span>
+<span class="hljs-keyword">var</span> markEmpty = board.getValue(<span class="hljs-keyword">new</span> board2d.Pos(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)); <span class="hljs-comment">// 空のセルを取得するとnullを返す</span>
+<span class="hljs-built_in">console</span>.log(markEmpty); <span class="hljs-comment">// =&gt; null</span></code></pre>
+				<a href="#盤面の参照" id="盤面の参照" style="color: inherit; text-decoration: none;">
+					<h3>盤面の参照</h3>
+				</a>
+				<a href="#指定位置にある駒を取得する" id="指定位置にある駒を取得する" style="color: inherit; text-decoration: none;">
+					<h4>指定位置にある駒を取得する</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> mark = board.getValue({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">2</span>});
+<span class="hljs-built_in">console</span>.log(mark); <span class="hljs-comment">// =&gt; 'x'</span>
+<span class="hljs-built_in">console</span>.log(board.getValue({<span class="hljs-attr">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>})); <span class="hljs-comment">// =&gt; null  :空の場合</span>
+<span class="hljs-built_in">console</span>.log(board.getValue({<span class="hljs-attr">x</span>: <span class="hljs-number">-1</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">-1</span>})); <span class="hljs-comment">// =&gt; undefined  :盤面外の場合</span></code></pre>
+				<a href="#駒をそれぞれ取得する" id="駒をそれぞれ取得する" style="color: inherit; text-decoration: none;">
+					<h4>駒をそれぞれ取得する</h4>
+				</a>
+				<pre><code class="language-javascript">board.forEach(<span class="hljs-function">(<span class="hljs-params">pos, value</span>) =&gt;</span> {
+  <span class="hljs-built_in">console</span>.log(pos.x, pos.y, value);
+})</code></pre>
+				<a href="#指定位置から任意の方向隣にある駒を取得する" id="指定位置から任意の方向隣にある駒を取得する" style="color: inherit; text-decoration: none;">
+					<h4>指定位置から任意の方向(隣)にある駒を取得する</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> mark;
+mark = board.getFromDrection({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">2</span>}, board2d.Direction.up)<span class="hljs-comment">// {x: 2, y: 1}の駒を取得する =&gt; 'o'</span>
+mark = board.getFromDrection({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">2</span>}, board2d.Direction.left)<span class="hljs-comment">// {x: 1, y: 2}の駒を取得する =&gt; null</span>
+mark = board.getFromDrection({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">2</span>}, board2d.Direction.right)<span class="hljs-comment">// {x: 3, y: 2}の駒を取得する =&gt; undefined :盤面外</span></code></pre>
+				<a href="#任意の条件で駒を探す" id="任意の条件で駒を探す" style="color: inherit; text-decoration: none;">
+					<h4>任意の条件で駒を探す</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> result = board.find(<span class="hljs-function">(<span class="hljs-params">pos, value</span>) =&gt;</span> value == <span class="hljs-string">'o'</span>) <span class="hljs-comment">// 'o'の駒を探す</span>
+<span class="hljs-built_in">console</span>.log(result.pos.x, result.pos.y, result.value);
+<span class="hljs-comment">// =&gt; 2, 0, o</span></code></pre>
+				<a href="#任意の条件で駒を探す全件取得" id="任意の条件で駒を探す全件取得" style="color: inherit; text-decoration: none;">
+					<h4>任意の条件で駒を探す(全件取得)</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> results = board.findAll(<span class="hljs-function">(<span class="hljs-params">pos, value</span>) =&gt;</span> value == <span class="hljs-string">'o'</span>) <span class="hljs-comment">// 'o'の駒を探す</span>
+results.forEach(<span class="hljs-function"><span class="hljs-params">v</span> =&gt;</span> <span class="hljs-built_in">console</span>.log(v.pos.x, v.pos.y, v.value))
+<span class="hljs-comment">// =&gt; 2, 0, o</span>
+<span class="hljs-comment">// =&gt; 2, 1, o</span></code></pre>
+				<a href="#駒の存在を確認する" id="駒の存在を確認する" style="color: inherit; text-decoration: none;">
+					<h4>駒の存在を確認する</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> exist = board.exists({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">2</span>})<span class="hljs-comment">// =&gt; true</span>
+<span class="hljs-keyword">var</span> notExist = board.exists({<span class="hljs-attr">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">0</span>})<span class="hljs-comment">// =&gt; false</span></code></pre>
+				<a href="#条件を満たす駒の存在チェック" id="条件を満たす駒の存在チェック" style="color: inherit; text-decoration: none;">
+					<h4>条件を満たす駒の存在チェック</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> result = board.some(<span class="hljs-function">(<span class="hljs-params">pos, value</span>) =&gt;</span> value == <span class="hljs-string">'x'</span>); <span class="hljs-comment">// xの駒があるかどうか</span>
+<span class="hljs-built_in">console</span>.log(result);<span class="hljs-comment">// =&gt; true</span></code></pre>
+				<a href="#盤面のサイズを取得する" id="盤面のサイズを取得する" style="color: inherit; text-decoration: none;">
+					<h4>盤面のサイズを取得する</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-built_in">console</span>.log(board.xSize);<span class="hljs-comment">// =&gt; 3</span>
+<span class="hljs-built_in">console</span>.log(board.ySize);<span class="hljs-comment">// =&gt; 3</span></code></pre>
+				<a href="#盤面の生データを取得する" id="盤面の生データを取得する" style="color: inherit; text-decoration: none;">
+					<h4>盤面の生データを取得する</h4>
+				</a>
+				<pre><code class="language-javascript"><span class="hljs-keyword">var</span> values = board.values;
+<span class="hljs-built_in">console</span>.log(values[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>]); <span class="hljs-comment">// =&gt; o</span>
+<span class="hljs-comment">// valuesを変更しても盤面には影響しない</span>
+values[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>] = <span class="hljs-literal">null</span>;
+<span class="hljs-built_in">console</span>.log(values[<span class="hljs-number">1</span>][<span class="hljs-number">2</span>]); <span class="hljs-comment">// =&gt; null</span>
+<span class="hljs-built_in">console</span>.log(board.getValue({<span class="hljs-attr">x</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">y</span>: <span class="hljs-number">1</span>})); <span class="hljs-comment">// =&gt; o  影響しない</span></code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -79,23 +158,14 @@
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
-					<li class="label tsd-is-external">
-						<span>Internals</span>
+					<li class=" tsd-kind-module">
+						<a href="modules/_board_board_.html">&quot;board/board&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_src_board_board_.html">&quot;src/board/board&quot;</a>
+						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-module">
-						<a href="modules/_src_index_.html">&quot;src/index&quot;</a>
-					</li>
-					<li class=" tsd-kind-module">
-						<a href="modules/_src_pos_pos_.html">&quot;src/pos/pos&quot;</a>
-					</li>
-					<li class="label tsd-is-external">
-						<span>Externals</span>
-					</li>
-					<li class=" tsd-kind-module tsd-is-external">
-						<a href="modules/_node_modules__types_color_name_index_d_.html">&quot;node_<wbr>modules/@types/color-<wbr>name/index.d&quot;</a>
+						<a href="modules/_pos_pos_.html">&quot;pos/pos&quot;</a>
 					</li>
 				</ul>
 			</nav>

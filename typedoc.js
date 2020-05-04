@@ -4,7 +4,7 @@ module.exports = {
   // readme: 'none',
   target: 'ES6',
   includes: './',
-  exclude: './node_modules/typescript/**',
+  exclude: './node_modules/**',
   mode: 'modules',
   //excludeExternals: true,
   //excludeNotExported: true,

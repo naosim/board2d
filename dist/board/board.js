@@ -75,6 +75,20 @@ export class BoardCore {
         }
         return null;
     }
+    findAll(check) {
+        var result = [];
+        for (var y = 0; y < this.ySize; y++) {
+            for (var x = 0; x < this.xSize; x++) {
+                if (check(__classPrivateFieldGet(this, _poses)[y][x], this.values[y][x])) {
+                    result.push({
+                        pos: __classPrivateFieldGet(this, _poses)[y][x],
+                        value: this.values[y][x]
+                    });
+                }
+            }
+        }
+        return result;
+    }
     getFromDrection(pos, direction) {
         var p = Pos.createFromPos(pos).addDirection(direction);
         var v = this.getValue(p);
@@ -107,8 +121,12 @@ export class Board {
     }
     get xSize() { return __classPrivateFieldGet(this, _boardCore).xSize; }
     get ySize() { return __classPrivateFieldGet(this, _boardCore).ySize; }
-    // これを隠蔽したい
-    //get values(): (T | null)[][] { return this.#boardCore.values; }
+    /**
+     * 盤面の生データ取得
+     *
+     * コピーを返す。要素を変更しても盤面には影響しない
+     */
+    get values() { return __classPrivateFieldGet(this, _boardCore).copy().values; }
     /**
      * 盤に駒を置く (イミュータブル)
      * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
@@ -127,6 +145,9 @@ export class Board {
         var newBoardCore = __classPrivateFieldGet(this, _boardCore).copy();
         newBoardCore.values[pos.y][pos.x] = value;
         return new Board(newBoardCore, true);
+    }
+    putFromXY(x, y, value) {
+        return this.put(new Pos(x, y), value);
     }
     forEach(callback) {
         __classPrivateFieldGet(this, _boardCore).forEach(callback);

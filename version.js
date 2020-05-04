@@ -1,3 +1,4 @@
+// ファイル内にある##version##をバージョン番号に置換する
 var version = require('version');
 var replaceInFile = require('replace-in-file');
 version.fetch(function(error, version) {
