@@ -71,6 +71,9 @@ export interface BoardReadable<T> {
    * @param direction
    */
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+
+  indexToPos(index: number): Pos;
+  posToIndex(pos: PosReadable): number;
 }
 
 export class BoardCore<T> implements BoardReadable<T> {
@@ -157,7 +160,6 @@ export class BoardCore<T> implements BoardReadable<T> {
     return result;
   }
 
-
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
     var p = Pos.createFromPos(pos).addDirection(direction);
     var v = this.getValue(p);
@@ -168,6 +170,23 @@ export class BoardCore<T> implements BoardReadable<T> {
       pos: p,
       value: v
     };
+  }
+
+  indexToPos(index: number): Pos {
+    if(index < 0 || index >= this.xSize * this.ySize) {
+      throw new Error('out of index');
+    }
+    return new Pos(
+      index % this.xSize as X,
+      Math.floor(index / this.xSize) as Y
+    );
+  }
+
+  posToIndex(pos: PosReadable): number {
+    if(pos.x < 0 || pos.x >= this.xSize || pos.y < 0 || pos.y >= this.ySize) {
+      throw new Error('out of index');
+    }
+    return pos.y * this.xSize + pos.x;
   }
 
   copy(): BoardCore<T> {
@@ -260,6 +279,14 @@ export class Board<T> implements BoardReadable<T> {
     return this.#boardCore.getFromDrection(pos, direction);
   }
 
+  indexToPos(index: number): Pos {
+    return this.#boardCore.indexToPos(index);
+  }
+
+  posToIndex(pos: PosReadable): number {
+    return this.#boardCore.posToIndex(pos);
+  }
+
   toMutable(): BoardMutable<T> {
     return new BoardMutable<T>(this.#boardCore);
   }
@@ -316,7 +343,7 @@ export class BoardMutable<T> implements BoardReadable<T> {
   find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null {
     return this.boardCore.find(check);
   }
-  
+
   findAll(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null>[] {
     return this.boardCore.findAll(check);
   }
@@ -325,6 +352,13 @@ export class BoardMutable<T> implements BoardReadable<T> {
     return this.boardCore.getFromDrection(pos, direction);
   }
 
+  indexToPos(index: number): Pos {
+    return this.boardCore.indexToPos(index);
+  }
+
+  posToIndex(pos: PosReadable): number {
+    return this.boardCore.posToIndex(pos);
+  }
 
   static empty<T>(xSize: number, ySize: number): BoardMutable<T> {
     return new BoardMutable<T>(new BoardCore(xSize, ySize), true as SkipCopy)

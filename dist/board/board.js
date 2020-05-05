@@ -100,6 +100,18 @@ export class BoardCore {
             value: v
         };
     }
+    indexToPos(index) {
+        if (index < 0 || index >= this.xSize * this.ySize) {
+            throw new Error('out of index');
+        }
+        return new Pos(index % this.xSize, Math.floor(index / this.xSize));
+    }
+    posToIndex(pos) {
+        if (pos.x < 0 || pos.x >= this.xSize || pos.y < 0 || pos.y >= this.ySize) {
+            throw new Error('out of index');
+        }
+        return pos.y * this.xSize + pos.x;
+    }
     copy() {
         var result = new BoardCore(this.xSize, this.ySize);
         this.forEach((pos, v) => result.values[pos.y][pos.x] = v);
@@ -176,6 +188,12 @@ export class Board {
     getFromDrection(pos, direction) {
         return __classPrivateFieldGet(this, _boardCore).getFromDrection(pos, direction);
     }
+    indexToPos(index) {
+        return __classPrivateFieldGet(this, _boardCore).indexToPos(index);
+    }
+    posToIndex(pos) {
+        return __classPrivateFieldGet(this, _boardCore).posToIndex(pos);
+    }
     toMutable() {
         return new BoardMutable(__classPrivateFieldGet(this, _boardCore));
     }
@@ -226,6 +244,12 @@ export class BoardMutable {
     }
     getFromDrection(pos, direction) {
         return this.boardCore.getFromDrection(pos, direction);
+    }
+    indexToPos(index) {
+        return this.boardCore.indexToPos(index);
+    }
+    posToIndex(pos) {
+        return this.boardCore.posToIndex(pos);
     }
     static empty(xSize, ySize) {
         return new BoardMutable(new BoardCore(xSize, ySize), true);

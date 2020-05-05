@@ -59,6 +59,8 @@ export interface BoardReadable<T> {
      * @param direction
      */
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+    indexToPos(index: number): Pos;
+    posToIndex(pos: PosReadable): number;
 }
 export declare class BoardCore<T> implements BoardReadable<T> {
     #private;
@@ -83,6 +85,8 @@ export declare class BoardCore<T> implements BoardReadable<T> {
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
     findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+    indexToPos(index: number): Pos;
+    posToIndex(pos: PosReadable): number;
     copy(): BoardCore<T>;
 }
 /**
@@ -128,6 +132,8 @@ export declare class Board<T> implements BoardReadable<T> {
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
     findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+    indexToPos(index: number): Pos;
+    posToIndex(pos: PosReadable): number;
     toMutable(): BoardMutable<T>;
     static empty<T>(xSize: number, ySize: number): Board<T>;
 }
@@ -152,6 +158,8 @@ export declare class BoardMutable<T> implements BoardReadable<T> {
     find(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null> | null;
     findAll(check: (pos: Pos, value: T | null) => boolean): ValueAndPos<T | null>[];
     getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+    indexToPos(index: number): Pos;
+    posToIndex(pos: PosReadable): number;
     static empty<T>(xSize: number, ySize: number): BoardMutable<T>;
     toImmutable(): Board<T>;
 }

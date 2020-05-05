@@ -1,6 +1,6 @@
 {
   "name": "board2d",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "ゲーム用の盤面ライブラリ。オセロや将棋など格子状の盤面を使ったゲームに使ってください。",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

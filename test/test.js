@@ -116,5 +116,44 @@ describe('盤面の参照', () => {
 
   })
 
-
 })
+
+describe('ユーティリティ', () => {
+  var board;
+  beforeEach(() => {
+    board = board2d.Board.empty(3, 3)
+  });
+
+  test('indexToPos', () => {
+    var pos = board.indexToPos(3);
+    expect(pos.x).toBe(0);
+    expect(pos.y).toBe(1);
+  })
+  
+  test('indexToPos#outOfIndex', () => {
+    expect(() => {
+      board.indexToPos(-1)
+    }).toThrow();
+    expect(() => {
+      board.indexToPos(9)
+    }).toThrow();
+  })
+
+  test('posToIndex', () => {
+    var index = board.posToIndex({x: 0, y: 1});
+    expect(index).toBe(3);
+  })
+  test('posToIndex#outOfIndex', () => {
+    expect(() => {
+      board.posToIndex({x: -1, y: 0});
+    }).toThrow();
+
+    expect(() => {
+      board.posToIndex({x: 3, y: 0});
+    }).toThrow();
+
+    expect(() => {
+      board.posToIndex({x: 0, y: 3});
+    }).toThrow();
+  })
+});
