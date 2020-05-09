@@ -11,8 +11,9 @@ import {
  */
 declare const SkipCopyNominality: unique symbol
 /**
- * コピーを省略するフラグ
- * boolean型の拡張
+ * Whether to omit the copy
+ * 
+ * Boolean type extension
  */
 export type SkipCopy = boolean & { [SkipCopyNominality]: never }
 
@@ -20,57 +21,57 @@ export interface BoardReadable<T> {
   readonly xSize: number;
   readonly ySize: number;
   /**
-   * callback関数を、盤上の各セルに対して一度ずつ実行する
+   * executes a provided function once for each positions on the board.
    * @param callback
    */
   forEach(callback: (pos: Pos, value: T | null)=>void): void;
 
   /**
-   * 指定した位置にある駒を取得する
-   *
-   * 指定した位置が空の場合はnullを返す。盤の外側の場合はundefinedを返す。
-   * ```javascript
-   * var board = new board2d.Board<string>(2, 2).put(new board2d.Pos(1, 1), 'x');
-   * var a = board.getValue(new board2d.Pos(1, 1)); // 'x'
-   * var b = board.getValue(new board2d.Pos(0, 0)); // null
-   * var c = board.getValue(new board2d.Pos(-1, -1)); // undefined
-   * ```
-   *
+   * Get the piece at the specified position
+   * 
    * @param pos
-   * @return 空の場合はnullを返す。盤の外側の場合はundefinedを返す。
+   * @return Returns null if the specified position is empty. Returns undefined if outside the board.
    */
   getValue(pos: PosReadable): T | null | undefined;
 
   /**
-   * 指定した位置にある駒を取得する
-   *
-   * 引数がx, yであること以外は、`getValue()`と同じ。
-   * @param x
-   * @param y
-   * @return 空の場合はnullを返す。盤の外側の場合、undefinedを返す。
+   * @deprecated
+   * @ignore
    */
   getValueFromXY(x: X, y: Y): T | null | undefined;
 
+  getValueWithXY(x: X, y: Y): T | null | undefined;
+
   /**
-   * 指定した位置に駒があるかどうかを取得する
+   * whether there is a piece at the specified position
    *
-   * 駒がある場合はtrueを返す。
-   * 駒がない、または、位置が盤の外側の場合、falseを返す。
+   * @return Returns true if there is a piece. Returns false if there is no a piece or the position is outside of the board.
    * @param pos
    */
   exists(pos: PosReadable): boolean;
 
+  /**
+   * Tests whether at least one piece in the board passes the test implemented by the provided check function. It returns a Boolean value.
+   * @param check 
+   */
   some(check: (pos: Pos, value: T | null)=>boolean): boolean;
 
   find(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null> | null;
   findAll(check: (pos: Pos, value: T | null)=>boolean): ValueAndPos<T | null>[];
 
   /**
-   * posからdirectionの方向に1歩進んだ場所を取得する
-   * @param pos
-   * @param direction
+   * @deprecated
+   * @ignore
    */
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
+
+  /**
+   * Get a piece that is one step ahead in the direction from position.
+   * @param pos
+   * @param direction
+   * @return Returns true if there is a piece. Returns false if there is no a piece or the position is outside of the board.
+   */
+  getValueWithDirection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined;
 
   indexToPos(index: number): Pos;
   posToIndex(pos: PosReadable): number;
@@ -81,13 +82,7 @@ export class BoardCore<T> implements BoardReadable<T> {
   readonly #poses: Pos[][];
 
   /**
-   * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
-   * ```javascript
-   * var board = new board2d.Board<string>(3, 3);
-   * ```
-   *
-   * @param xSize
-   * @param ySize
+   * Create with board size.
    */
   constructor(readonly xSize:number, readonly ySize: number) {
     this.values = new Array(ySize).fill(null).map(_ => new Array(xSize).fill(null));
@@ -106,7 +101,15 @@ export class BoardCore<T> implements BoardReadable<T> {
     return this.getValueFromXY(pos.x, pos.y);
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   getValueFromXY(x: X, y: Y): T | null | undefined {
+    return this.getValueWithXY(x, y);
+  }
+
+  getValueWithXY(x: X, y: Y): T | null | undefined {
     if(x < 0 || y < 0) {
       return undefined;
     }
@@ -124,7 +127,7 @@ export class BoardCore<T> implements BoardReadable<T> {
     for(var y: Y = 0 as Y; y < this.ySize; y++) {
       for(var x: X = 0 as X; x < this.xSize; x++) {
         if(check(this.#poses[y][x], this.values[y][x])) {
-          return true;// 1つでも見つかったら即返す
+          return true;
         }
       }
     }
@@ -135,10 +138,7 @@ export class BoardCore<T> implements BoardReadable<T> {
     for(var y = 0 as Y; y < this.ySize; y++) {
       for(var x = 0 as X; x < this.xSize; x++) {
         if(check(this.#poses[y][x], this.values[y][x])) {
-          return {
-            pos: this.#poses[y][x],
-            value: this.values[y][x]
-          };// 1つでも見つかったら即返す
+          return { pos: this.#poses[y][x], value: this.values[y][x] };
         }
       }
     }
@@ -160,7 +160,15 @@ export class BoardCore<T> implements BoardReadable<T> {
     return result;
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
+    return this.getValueWithDirection(pos, direction);
+  }
+
+  getValueWithDirection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
     var p = Pos.createFromPos(pos).addDirection(direction);
     var v = this.getValue(p);
     if(v === undefined) {
@@ -197,11 +205,7 @@ export class BoardCore<T> implements BoardReadable<T> {
 }
 
 /**
- * 盤
- *
- * 2次元配列のラッパークラス
- * 空のセルにはnullが入っている
- *
+ * Two-dimensional board
  */
 export class Board<T> implements BoardReadable<T> {
   readonly #boardCore: BoardCore<T>;
@@ -214,25 +218,14 @@ export class Board<T> implements BoardReadable<T> {
   get ySize(): number { return this.#boardCore.ySize; }
 
   /**
-   * 盤面の生データ取得
+   * Two-dimensional array as raw data on the board
    * 
-   * コピーを返す。要素を変更しても盤面には影響しない
+   * @return Return a copy. Updating the returned value does not affect the board.
    */
   get values(): (T | null)[][] { return this.#boardCore.copy().values; }
 
   /**
-   * 盤に駒を置く (イミュータブル)
-   * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
-   * ```javascript
-   * var board = new board2d.Board<string>(3, 3);
-   * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
-   * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
-   * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
-   * ```
-   *
-   * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
-   * @param pos
-   * @param value
+   * Put pieces on the board (immutable)
    */
   put(pos: PosReadable, value: T | null): Board<T> {
     var newBoardCore = this.#boardCore.copy();
@@ -240,7 +233,15 @@ export class Board<T> implements BoardReadable<T> {
     return new Board<T>(newBoardCore, true as SkipCopy);
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   putFromXY(x: X, y: Y, value: T | null) {
+    return this.put(new Pos(x, y), value);
+  }
+
+  putWithXY(x: X, y: Y, value: T | null) {
     return this.put(new Pos(x, y), value);
   }
 
@@ -252,8 +253,16 @@ export class Board<T> implements BoardReadable<T> {
     return this.#boardCore.getValue(pos);
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   getValueFromXY(x: X, y: Y): T | null | undefined {
-    return this.#boardCore.getValueFromXY(x, y);
+    return this.#boardCore.getValueWithXY(x, y);
+  }
+
+  getValueWithXY(x: X, y: Y): T | null | undefined {
+    return this.#boardCore.getValueWithXY(x, y);
   }
 
   exists(pos: PosReadable): boolean {
@@ -275,8 +284,16 @@ export class Board<T> implements BoardReadable<T> {
     return this.#boardCore.findAll(check);
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
-    return this.#boardCore.getFromDrection(pos, direction);
+    return this.#boardCore.getValueWithDirection(pos, direction);
+  }
+
+  getValueWithDirection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
+    return this.#boardCore.getValueWithDirection(pos, direction);
   }
 
   indexToPos(index: number): Pos {
@@ -296,6 +313,9 @@ export class Board<T> implements BoardReadable<T> {
   }
 }
 
+/**
+ * Use of Board class is recommended, but it is used when the processing speed and memory usage efficiency are required.
+ */
 export class BoardMutable<T> implements BoardReadable<T> {
   boardCore: BoardCore<T>;
   constructor(boardCore: BoardCore<T>, skipCopy: SkipCopy = false as SkipCopy) {
@@ -306,10 +326,7 @@ export class BoardMutable<T> implements BoardReadable<T> {
   get ySize(): number { return this.boardCore.ySize; }
 
   /**
-   * 盤を更新する
-   * 
-   * @param pos
-   * @param value
+   * Put pieces on the board (mutable)
    */
   put(pos: PosReadable, value: T | null): BoardMutable<T> {
     this.boardCore.values[pos.y][pos.x] = value;
@@ -324,8 +341,16 @@ export class BoardMutable<T> implements BoardReadable<T> {
     return this.boardCore.getValue(pos);
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   getValueFromXY(x: X, y: Y): T | null | undefined {
-    return this.boardCore.getValueFromXY(x, y);
+    return this.boardCore.getValueWithXY(x, y);
+  }
+
+  getValueWithXY(x: X, y: Y): T | null | undefined {
+    return this.boardCore.getValueWithXY(x, y);
   }
 
   exists(pos: PosReadable): boolean {
@@ -348,8 +373,16 @@ export class BoardMutable<T> implements BoardReadable<T> {
     return this.boardCore.findAll(check);
   }
 
+  /**
+   * @deprecated
+   * @ignore
+   */
   getFromDrection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
-    return this.boardCore.getFromDrection(pos, direction);
+    return this.boardCore.getValueWithDirection(pos, direction);
+  }
+
+  getValueWithDirection(pos: PosReadable, direction: Direction): ValueAndPos<T | null> | undefined {
+    return this.boardCore.getValueWithDirection(pos, direction);
   }
 
   indexToPos(index: number): Pos {

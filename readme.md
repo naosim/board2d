@@ -1,7 +1,7 @@
 board2d
 ===
-ゲーム用の盤面ライブラリ。  
-オセロや将棋など格子状の盤面を使ったゲームに使ってください。
+A board library for games.
+Please use it for games such as Othello and Shogi that use a grid board.
 
 
 ## install
@@ -15,82 +15,80 @@ import * as board2d from 'board2d';
 ```
 
 ## usage
-### 盤面の更新
-#### 3x3の盤を作り、駒を置く
+### Updating the board
+#### Make a 3x3 board and place pieces
 ```javascript
-var board = board2d.Board.empty(3, 3) // 3x3の盤面を生成
-  .put(new board2d.Pos(2, 2), 'x') // 駒を置く
-  .put({x: 2, y: 1}, 'o') // 座標は{x:number, y:number}のobjectでも良い
-  .putFromXY(2, 0, 'o') // x, yを直接渡すメソッドもある
-var mark = board.getValue(new board2d.Pos(2, 2)); // 指定位置の駒を取得する
+var board = board2d.Board.empty(3, 3)
+  .put(new board2d.Pos(2, 2), 'x') // Put a piece with Pos class instance
+  .put({x: 2, y: 1}, 'o') // Put a piece with object
+  .putWithXY(2, 0, 'o') // Put a piece with x and y directly
+var mark = board.getValue({x: 2, y: 2}); // Get the piece at the specified position
 console.log(mark); // => 'x'
-var markEmpty = board.getValue(new board2d.Pos(0, 0)); // 空のセルを取得するとnullを返す
-console.log(markEmpty); // => null
 ```
 
-### 盤面の参照
-#### 指定位置にある駒を取得する
+### Referencing the board
+#### Get the piece at the specified position
 ```javascript
-var mark = board.getValue({x: 2, y: 2});
+var mark = board.getValue({x: 2, y: 2}); // Get the piece at the specified position
 console.log(mark); // => 'x'
-console.log(board.getValue({x: 0, y: 0})); // => null  :空の場合
-console.log(board.getValue({x: -1, y: -1})); // => undefined  :盤面外の場合
+console.log(board.getValue({x: 0, y: 0})); // Returns null if the specified position is empty
+console.log(board.getValue({x: -1, y: -1})); // Returns undefined if outside the board
 ```
 
-#### 駒をそれぞれ取得する
+#### Get each piece
 ```javascript
 board.forEach((pos, value) => {
   console.log(pos.x, pos.y, value);
 })
 ```
 
-#### 指定位置から任意の方向(隣)にある駒を取得する
+#### Get a piece that is one step ahead in the direction from position.
 ```javascript
 var mark;
-posAndValue = board.getFromDrection({x: 2, y: 2}, board2d.Direction.up)// {x: 2, y: 1}の駒を取得する => {pos: {x: 2, y: 1}, value: 'o'}
-posAndValue = board.getFromDrection({x: 2, y: 2}, board2d.Direction.left)// {x: 1, y: 2}の駒を取得する => {pos: {x: 1, y: 2}, value: null}
-posAndValue = board.getFromDrection({x: 2, y: 2}, board2d.Direction.right)// {x: 3, y: 2}の駒を取得する => undefined
+posAndValue = board.getValueWithDirection({x: 2, y: 2}, board2d.Direction.up)// => {pos: {x: 2, y: 1}, value: 'o'}
+posAndValue = board.getValueWithDirection({x: 2, y: 2}, board2d.Direction.left)// => {pos: {x: 1, y: 2}, value: null}
+posAndValue = board.getValueWithDirection({x: 2, y: 2}, board2d.Direction.right)// => undefined
 ```
 
-#### 任意の条件で駒を探す
+#### Find a piece under any condition
 ```javascript
-var result = board.find((pos, value) => value == 'o') // 'o'の駒を探す
+var result = board.find((pos, value) => value == 'o') // find 'o' piece
 console.log(result.pos.x, result.pos.y, result.value);
 // => 2, 0, o
 ```
 
-#### 任意の条件で駒を探す(全件取得)
+#### Find pieces with any condition
 ```javascript
-var results = board.findAll((pos, value) => value == 'o') // 'o'の駒を探す
+var results = board.findAll((pos, value) => value == 'o') // find 'o' piece
 results.forEach(v => console.log(v.pos.x, v.pos.y, v.value))
 // => 2, 0, o
 // => 2, 1, o
 ```
 
-#### 駒の存在を確認する
+#### Check the existence of the piece
 ```javascript
 var exist = board.exists({x: 2, y: 2})// => true
 var notExist = board.exists({x: 0, y: 0})// => false
 ```
 
-#### 条件を満たす駒の存在チェック
+#### Check the existence of pieces with any condition
 ```javascript
-var result = board.some((pos, value) => value == 'x'); // xの駒があるかどうか
+var result = board.some((pos, value) => value == 'x');
 console.log(result);// => true
 ```
 
-#### 盤面のサイズを取得する
+#### Get the size of the board
 ```javascript
 console.log(board.xSize);// => 3
 console.log(board.ySize);// => 3
 ```
 
-#### 盤面の生データを取得する
+#### Get the raw data on the board
 ```javascript
 var values = board.values;
 console.log(values[1][2]); // => o
-// valuesを変更しても盤面には影響しない
-values[1][2] = null;
+// Return a copy. Updating the returned value does not affect the board.
+values[1][2] = null;// update
 console.log(values[1][2]); // => null
-console.log(board.getValue({x: 2, y: 1})); // => o  影響しない
+console.log(board.getValue({x: 2, y: 1})); // => o  no updated
 ```

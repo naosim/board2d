@@ -1,7 +1,7 @@
 {
   "name": "board2d",
   "version": "1.1.1",
-  "description": "ゲーム用の盤面ライブラリ。オセロや将棋など格子状の盤面を使ったゲームに使ってください。",
+  "description": "A board library for games. Please use it for games such as Othello and Shogi that use a grid board.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "directories": {

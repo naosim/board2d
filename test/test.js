@@ -52,9 +52,9 @@ describe('盤面の参照', () => {
   })
 
   test('指定位置から任意の方向(隣)にある駒を取得する', () => {
-    var posAndValue1 = board.getFromDrection({x: 2, y: 2}, board2d.Direction.up)// {x: 2, y: 1}の駒を取得する => 'o'
-    var posAndValue2 = board.getFromDrection({x: 2, y: 2}, board2d.Direction.left)// {x: 1, y: 2}の駒を取得する => null
-    var posAndValue3 = board.getFromDrection({x: 2, y: 2}, board2d.Direction.right)// {x: 3, y: 2}の駒を取得する => undefined :盤面外
+    var posAndValue1 = board.getValueWithDirection({x: 2, y: 2}, board2d.Direction.up)// {x: 2, y: 1}の駒を取得する => 'o'
+    var posAndValue2 = board.getValueWithDirection({x: 2, y: 2}, board2d.Direction.left)// {x: 1, y: 2}の駒を取得する => null
+    var posAndValue3 = board.getValueWithDirection({x: 2, y: 2}, board2d.Direction.right)// {x: 3, y: 2}の駒を取得する => undefined :盤面外
 
     expect(JSON.stringify(posAndValue1.pos)).toBe(JSON.stringify({x: 2, y: 1}));
     expect(posAndValue1.value).toBe('o');

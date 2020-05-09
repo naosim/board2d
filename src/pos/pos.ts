@@ -3,8 +3,7 @@
  */
 declare const XNominality: unique symbol
 /**
- * X座標
- * number型の拡張
+ * Number type extension
  */
 export type X = number & { [XNominality]: never }
 
@@ -13,13 +12,12 @@ export type X = number & { [XNominality]: never }
  */
 declare const YNominality: unique symbol
 /**
- * Y座標
- * number型の拡張
+ * Number type extension
  */
 export type Y = number & { [YNominality]: never }
 
 /**
- * 位置
+ * Position on the board
  */
 export interface PosReadable {
   readonly x: X;
@@ -27,7 +25,7 @@ export interface PosReadable {
 }
 
 /**
- * 位置(不変)
+ * Position on the board (immutable)
  */
 export class Pos implements PosReadable {
   constructor(readonly x: X, readonly y: Y) {
@@ -42,13 +40,13 @@ export class Pos implements PosReadable {
   }
 
   /**
-   * 方向を加えた位置を取得する
+   *  Get the position moved one step in the specified direction
    *
-   * 現在(x, y) = (0, 0)にいる場合
-   * up なら    ( 0, -1)
-   * down なら  ( 0,  1)
-   * right なら ( 1,  0)
-   * left なら  (-1,  0)
+   * If you are currently at (x, y) = (0, 0):
+   * up    is  ( 0, -1)
+   * down  is  ( 0,  1)
+   * right is  ( 1,  0)
+   * left  is  (-1,  0)
    * @param direction
    */
   addDirection(direction: Direction): Pos {
@@ -83,7 +81,9 @@ export class Pos implements PosReadable {
 }
 
 /**
- * 位置
+ * Position on the board (mutable)
+ * 
+ * Use of pos class is recommended, but it is used when the processing speed and memory usage efficiency are required.
  */
 export class PosMutable implements PosReadable{
   constructor(public x: X, public y: Y) {
@@ -98,16 +98,6 @@ export class PosMutable implements PosReadable{
     return this;
   }
 
-  /**
-   * 方向を加えた位置を取得する
-   *
-   * 現在(x, y) = (0, 0)にいる場合
-   * up なら    ( 0, -1)
-   * down なら  ( 0,  1)
-   * right なら ( 1,  0)
-   * left なら  (-1,  0)
-   * @param direction
-   */
   addDirection(direction: Direction): PosMutable {
     return this.add(Pos.createFromDirection(direction));
   }
@@ -117,9 +107,6 @@ export class PosMutable implements PosReadable{
   }
 }
 
-/**
- * 方向
- */
 export enum Direction {
   up, down, left, right,
   upLeft, upRight, downLeft, downRight
