@@ -3,8 +3,7 @@
  */
 declare const XNominality: unique symbol;
 /**
- * X座標
- * number型の拡張
+ * Number type extension
  */
 export declare type X = number & {
     [XNominality]: never;
@@ -14,21 +13,20 @@ export declare type X = number & {
  */
 declare const YNominality: unique symbol;
 /**
- * Y座標
- * number型の拡張
+ * Number type extension
  */
 export declare type Y = number & {
     [YNominality]: never;
 };
 /**
- * 位置
+ * Position on the board
  */
 export interface PosReadable {
     readonly x: X;
     readonly y: Y;
 }
 /**
- * 位置(不変)
+ * Position on the board (immutable)
  */
 export declare class Pos implements PosReadable {
     readonly x: X;
@@ -37,13 +35,13 @@ export declare class Pos implements PosReadable {
     add(pos: PosReadable): Pos;
     addXY(x: X, y: Y): Pos;
     /**
-     * 方向を加えた位置を取得する
+     *  Get the position moved one step in the specified direction
      *
-     * 現在(x, y) = (0, 0)にいる場合
-     * up なら    ( 0, -1)
-     * down なら  ( 0,  1)
-     * right なら ( 1,  0)
-     * left なら  (-1,  0)
+     * If you are currently at (x, y) = (0, 0):
+     * up    is  ( 0, -1)
+     * down  is  ( 0,  1)
+     * right is  ( 1,  0)
+     * left  is  (-1,  0)
      * @param direction
      */
     addDirection(direction: Direction): Pos;
@@ -51,7 +49,9 @@ export declare class Pos implements PosReadable {
     static createFromDirection(direction: Direction): Pos;
 }
 /**
- * 位置
+ * Position on the board (mutable)
+ *
+ * Use of pos class is recommended, but it is used when the processing speed and memory usage efficiency are required.
  */
 export declare class PosMutable implements PosReadable {
     x: X;
@@ -59,22 +59,9 @@ export declare class PosMutable implements PosReadable {
     constructor(x: X, y: Y);
     add(pos: PosReadable): PosMutable;
     addXY(x: X, y: Y): PosMutable;
-    /**
-     * 方向を加えた位置を取得する
-     *
-     * 現在(x, y) = (0, 0)にいる場合
-     * up なら    ( 0, -1)
-     * down なら  ( 0,  1)
-     * right なら ( 1,  0)
-     * left なら  (-1,  0)
-     * @param direction
-     */
     addDirection(direction: Direction): PosMutable;
     static createFromPos(pos: PosReadable): PosMutable;
 }
-/**
- * 方向
- */
 export declare enum Direction {
     up = 0,
     down = 1,

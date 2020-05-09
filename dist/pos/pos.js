@@ -1,5 +1,5 @@
 /**
- * 位置(不変)
+ * Position on the board (immutable)
  */
 export class Pos {
     constructor(x, y) {
@@ -13,13 +13,13 @@ export class Pos {
         return new Pos(this.x + x, this.y + y);
     }
     /**
-     * 方向を加えた位置を取得する
+     *  Get the position moved one step in the specified direction
      *
-     * 現在(x, y) = (0, 0)にいる場合
-     * up なら    ( 0, -1)
-     * down なら  ( 0,  1)
-     * right なら ( 1,  0)
-     * left なら  (-1,  0)
+     * If you are currently at (x, y) = (0, 0):
+     * up    is  ( 0, -1)
+     * down  is  ( 0,  1)
+     * right is  ( 1,  0)
+     * left  is  (-1,  0)
      * @param direction
      */
     addDirection(direction) {
@@ -59,7 +59,9 @@ export class Pos {
     }
 }
 /**
- * 位置
+ * Position on the board (mutable)
+ *
+ * Use of pos class is recommended, but it is used when the processing speed and memory usage efficiency are required.
  */
 export class PosMutable {
     constructor(x, y) {
@@ -74,16 +76,6 @@ export class PosMutable {
         this.y = this.y + y;
         return this;
     }
-    /**
-     * 方向を加えた位置を取得する
-     *
-     * 現在(x, y) = (0, 0)にいる場合
-     * up なら    ( 0, -1)
-     * down なら  ( 0,  1)
-     * right なら ( 1,  0)
-     * left なら  (-1,  0)
-     * @param direction
-     */
     addDirection(direction) {
         return this.add(Pos.createFromDirection(direction));
     }
@@ -91,9 +83,6 @@ export class PosMutable {
         return new PosMutable(pos.x, pos.y);
     }
 }
-/**
- * 方向
- */
 export var Direction;
 (function (Direction) {
     Direction[Direction["up"] = 0] = "up";

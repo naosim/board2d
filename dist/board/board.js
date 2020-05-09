@@ -15,13 +15,7 @@ var _poses, _boardCore;
 import { Pos } from '../pos/pos';
 export class BoardCore {
     /**
-     * 盤のサイズを指定してインスタンスを生成します。下記は3x3の盤を作っています。
-     * ```javascript
-     * var board = new board2d.Board<string>(3, 3);
-     * ```
-     *
-     * @param xSize
-     * @param ySize
+     * Create with board size.
      */
     constructor(xSize, ySize) {
         this.xSize = xSize;
@@ -40,7 +34,14 @@ export class BoardCore {
     getValue(pos) {
         return this.getValueFromXY(pos.x, pos.y);
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     getValueFromXY(x, y) {
+        return this.getValueWithXY(x, y);
+    }
+    getValueWithXY(x, y) {
         if (x < 0 || y < 0) {
             return undefined;
         }
@@ -56,7 +57,7 @@ export class BoardCore {
         for (var y = 0; y < this.ySize; y++) {
             for (var x = 0; x < this.xSize; x++) {
                 if (check(__classPrivateFieldGet(this, _poses)[y][x], this.values[y][x])) {
-                    return true; // 1つでも見つかったら即返す
+                    return true;
                 }
             }
         }
@@ -66,10 +67,7 @@ export class BoardCore {
         for (var y = 0; y < this.ySize; y++) {
             for (var x = 0; x < this.xSize; x++) {
                 if (check(__classPrivateFieldGet(this, _poses)[y][x], this.values[y][x])) {
-                    return {
-                        pos: __classPrivateFieldGet(this, _poses)[y][x],
-                        value: this.values[y][x]
-                    }; // 1つでも見つかったら即返す
+                    return { pos: __classPrivateFieldGet(this, _poses)[y][x], value: this.values[y][x] };
                 }
             }
         }
@@ -89,7 +87,14 @@ export class BoardCore {
         }
         return result;
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     getFromDrection(pos, direction) {
+        return this.getValueWithDirection(pos, direction);
+    }
+    getValueWithDirection(pos, direction) {
         var p = Pos.createFromPos(pos).addDirection(direction);
         var v = this.getValue(p);
         if (v === undefined) {
@@ -120,11 +125,7 @@ export class BoardCore {
 }
 _poses = new WeakMap();
 /**
- * 盤
- *
- * 2次元配列のラッパークラス
- * 空のセルにはnullが入っている
- *
+ * Two-dimensional board
  */
 export class Board {
     constructor(boardCore, skipCopy = false) {
@@ -134,31 +135,27 @@ export class Board {
     get xSize() { return __classPrivateFieldGet(this, _boardCore).xSize; }
     get ySize() { return __classPrivateFieldGet(this, _boardCore).ySize; }
     /**
-     * 盤面の生データ取得
+     * Two-dimensional array as raw data on the board
      *
-     * コピーを返す。要素を変更しても盤面には影響しない
+     * @return Return a copy. Updating the returned value does not affect the board.
      */
     get values() { return __classPrivateFieldGet(this, _boardCore).copy().values; }
     /**
-     * 盤に駒を置く (イミュータブル)
-     * 盤上のセルに駒をおきます。下記では3x3の盤上の`(x, y)=(2, 2)`に`"x"`という駒を置いています。
-     * ```javascript
-     * var board = new board2d.Board<string>(3, 3);
-     * var newBoard = board.put(new board2d.Pos(2, 2), 'x'); // 駒を置く
-     * console.log(board.getValue(new board2d.Pos(2, 2)));    // null(空)
-     * console.log(newBoard.getValue(new board2d.Pos(2, 2))); // x
-     * ```
-     *
-     * メソッドの戻り値は駒を置いた結果の盤です。元のインスタンスは変更されません。そのため上記の例の場合、`board変数`の状態は変化しません。また引数の`value`に`null`を指定した場合、そのセルは空になります。
-     * @param pos
-     * @param value
+     * Put pieces on the board (immutable)
      */
     put(pos, value) {
         var newBoardCore = __classPrivateFieldGet(this, _boardCore).copy();
         newBoardCore.values[pos.y][pos.x] = value;
         return new Board(newBoardCore, true);
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     putFromXY(x, y, value) {
+        return this.put(new Pos(x, y), value);
+    }
+    putWithXY(x, y, value) {
         return this.put(new Pos(x, y), value);
     }
     forEach(callback) {
@@ -167,8 +164,15 @@ export class Board {
     getValue(pos) {
         return __classPrivateFieldGet(this, _boardCore).getValue(pos);
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     getValueFromXY(x, y) {
-        return __classPrivateFieldGet(this, _boardCore).getValueFromXY(x, y);
+        return __classPrivateFieldGet(this, _boardCore).getValueWithXY(x, y);
+    }
+    getValueWithXY(x, y) {
+        return __classPrivateFieldGet(this, _boardCore).getValueWithXY(x, y);
     }
     exists(pos) {
         return __classPrivateFieldGet(this, _boardCore).exists(pos);
@@ -185,8 +189,15 @@ export class Board {
     findAll(check) {
         return __classPrivateFieldGet(this, _boardCore).findAll(check);
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     getFromDrection(pos, direction) {
-        return __classPrivateFieldGet(this, _boardCore).getFromDrection(pos, direction);
+        return __classPrivateFieldGet(this, _boardCore).getValueWithDirection(pos, direction);
+    }
+    getValueWithDirection(pos, direction) {
+        return __classPrivateFieldGet(this, _boardCore).getValueWithDirection(pos, direction);
     }
     indexToPos(index) {
         return __classPrivateFieldGet(this, _boardCore).indexToPos(index);
@@ -202,6 +213,9 @@ export class Board {
     }
 }
 _boardCore = new WeakMap();
+/**
+ * Use of Board class is recommended, but it is used when the processing speed and memory usage efficiency are required.
+ */
 export class BoardMutable {
     constructor(boardCore, skipCopy = false) {
         this.boardCore = skipCopy ? boardCore : boardCore.copy();
@@ -209,10 +223,7 @@ export class BoardMutable {
     get xSize() { return this.boardCore.xSize; }
     get ySize() { return this.boardCore.ySize; }
     /**
-     * 盤を更新する
-     *
-     * @param pos
-     * @param value
+     * Put pieces on the board (mutable)
      */
     put(pos, value) {
         this.boardCore.values[pos.y][pos.x] = value;
@@ -224,8 +235,15 @@ export class BoardMutable {
     getValue(pos) {
         return this.boardCore.getValue(pos);
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     getValueFromXY(x, y) {
-        return this.boardCore.getValueFromXY(x, y);
+        return this.boardCore.getValueWithXY(x, y);
+    }
+    getValueWithXY(x, y) {
+        return this.boardCore.getValueWithXY(x, y);
     }
     exists(pos) {
         return this.boardCore.exists(pos);
@@ -242,8 +260,15 @@ export class BoardMutable {
     findAll(check) {
         return this.boardCore.findAll(check);
     }
+    /**
+     * @deprecated
+     * @ignore
+     */
     getFromDrection(pos, direction) {
-        return this.boardCore.getFromDrection(pos, direction);
+        return this.boardCore.getValueWithDirection(pos, direction);
+    }
+    getValueWithDirection(pos, direction) {
+        return this.boardCore.getValueWithDirection(pos, direction);
     }
     indexToPos(index) {
         return this.boardCore.indexToPos(index);
