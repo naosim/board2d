@@ -1,6 +1,6 @@
 {
   "name": "board2d",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "A board library for games. Please use it for games such as Othello and Shogi that use a grid board.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
