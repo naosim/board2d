@@ -4,6 +4,6 @@
  */
 export const version = '##version##';
 
-export * from './pos/pos';
-export * from './board/board';
+export * from './pos/pos.ts';
+export * from './board/board.ts';
 
